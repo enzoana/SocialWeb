@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 03/09/2018 17:25:25 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="org.socialweb.model.PersonaHumana" table="persona_humana" schema="public" optimistic-lock="version">
+        <id name="personaForeign" type="int">
+            <column name="persona" />
+            <generator class="foreign">
+                <param name="property">persona</param>
+            </generator>
+        </id>
+        <one-to-one name="persona" class="org.socialweb.model.Persona" constrained="true"></one-to-one>
+        <many-to-one name="tipoDocumento" class="org.socialweb.model.TipoDocumento" fetch="select">
+            <column name="tipo_documento" not-null="true" />
+        </many-to-one>
+        <property name="documento" type="string">
+            <column name="documento" not-null="true" />
+        </property>
+        <property name="nombre" type="string">
+            <column name="nombre" not-null="true" />
+        </property>
+        <property name="apellido" type="string">
+            <column name="apellido" not-null="true" />
+        </property>
+        <property name="usrCreate" type="string">
+            <column name="usr_create" not-null="true" />
+        </property>
+        <property name="timeCreate" type="timestamp">
+            <column name="time_create" length="29" not-null="true" />
+        </property>
+        <property name="usrLastUpdate" type="string">
+            <column name="usr_last_update" not-null="true" />
+        </property>
+        <property name="timeLastUpdate" type="timestamp">
+            <column name="time_last_update" length="29" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

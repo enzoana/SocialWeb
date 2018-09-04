@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 03/09/2018 17:25:25 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="org.socialweb.model.Contacto" table="contacto" schema="public" optimistic-lock="version">
+        <id name="codigo" type="int">
+            <column name="codigo" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="persona" class="org.socialweb.model.Persona" fetch="select">
+            <column name="persona" not-null="true" />
+        </many-to-one>
+        <many-to-one name="tipoContacto" class="org.socialweb.model.TipoContacto" fetch="select">
+            <column name="tipo_contacto" not-null="true" />
+        </many-to-one>
+        <property name="valor" type="string">
+            <column name="valor" not-null="true" />
+        </property>
+        <property name="usrCreate" type="string">
+            <column name="usr_create" not-null="true" />
+        </property>
+        <property name="timeCreate" type="timestamp">
+            <column name="time_create" length="29" not-null="true" />
+        </property>
+        <property name="usrLastUpdate" type="string">
+            <column name="usr_last_update" not-null="true" />
+        </property>
+        <property name="timeLastUpdate" type="timestamp">
+            <column name="time_last_update" length="29" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

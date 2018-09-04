@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 03/09/2018 17:25:25 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="org.socialweb.model.Domicilio" table="domicilio" schema="public" optimistic-lock="version">
+        <id name="codigo" type="int">
+            <column name="codigo" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="ciudad" class="org.socialweb.model.Ciudad" fetch="select">
+            <column name="ciudad" not-null="true" />
+        </many-to-one>
+        <property name="calle" type="string">
+            <column name="calle" not-null="true" />
+        </property>
+        <property name="numero" type="string">
+            <column name="numero" />
+        </property>
+        <property name="departamento" type="string">
+            <column name="departamento" />
+        </property>
+        <property name="usrCreate" type="string">
+            <column name="usr_create" not-null="true" />
+        </property>
+        <property name="timeCreate" type="timestamp">
+            <column name="time_create" length="29" not-null="true" />
+        </property>
+        <property name="usrLastUpdate" type="string">
+            <column name="usr_last_update" not-null="true" />
+        </property>
+        <property name="timeLastUpdate" type="timestamp">
+            <column name="time_last_update" length="29" not-null="true" />
+        </property>
+        <set name="personasConDomicilioReal" table="persona" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="domicilio_real" not-null="true" />
+            </key>
+            <one-to-many class="org.socialweb.model.Persona" />
+        </set>
+        <set name="personasConDomicilioFiscal" table="persona" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="domicilio_fiscal" />
+            </key>
+            <one-to-many class="org.socialweb.model.Persona" />
+        </set>
+        <set name="personasConDomicilioLegal" table="persona" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="domicilio_legal" />
+            </key>
+            <one-to-many class="org.socialweb.model.Persona" />
+        </set>
+    </class>
+</hibernate-mapping>
