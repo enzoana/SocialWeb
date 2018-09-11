@@ -6,9 +6,11 @@
     <class name="org.socialweb.model.Domicilio" table="domicilio" schema="public" optimistic-lock="version">
         <id name="codigo" type="int">
             <column name="codigo" />
-            <generator class="assigned" />
+            <generator class="sequence">
+                <param name="sequence">seq_codigo_domicilio</param>
+            </generator>
         </id>
-        <many-to-one name="ciudad" class="org.socialweb.model.Ciudad" fetch="select">
+        <many-to-one name="ciudad" class="org.socialweb.model.Ciudad" fetch="select" insert="false" update="false">
             <column name="ciudad" not-null="true" />
         </many-to-one>
         <property name="calle" type="string">
@@ -32,23 +34,20 @@
         <property name="timeLastUpdate" type="timestamp">
             <column name="time_last_update" length="29" not-null="true" />
         </property>
-        <set name="personasConDomicilioReal" table="persona" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="domicilio_real" not-null="true" />
-            </key>
+        <list name="domicilioReal" table="persona" inverse="true" lazy="true" fetch="select">
+            <key column="domicilio_real" not-null="true" />
+            <list-index column="codigo"/>
             <one-to-many class="org.socialweb.model.Persona" />
-        </set>
-        <set name="personasConDomicilioFiscal" table="persona" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="domicilio_fiscal" />
-            </key>
+        </list>
+        <list name="domicilioFiscal" table="persona" inverse="true" lazy="true" fetch="select">
+            <key column="domicilio_fiscal" />
+            <list-index column="codigo"/>
             <one-to-many class="org.socialweb.model.Persona" />
-        </set>
-        <set name="personasConDomicilioLegal" table="persona" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="domicilio_legal" />
-            </key>
+        </list>
+        <list name="domicilioLegal" table="persona" inverse="true" lazy="true" fetch="select">
+            <key column="domicilio_legal" />
+            <list-index column="codigo"/>
             <one-to-many class="org.socialweb.model.Persona" />
-        </set>
+        </list>
     </class>
 </hibernate-mapping>

@@ -6,12 +6,14 @@
     <class name="org.socialweb.model.Contacto" table="contacto" schema="public" optimistic-lock="version">
         <id name="codigo" type="int">
             <column name="codigo" />
-            <generator class="assigned" />
+            <generator class="sequence">
+                <param name="sequence">seq_codigo_contacto</param>
+            </generator>
         </id>
-        <many-to-one name="persona" class="org.socialweb.model.Persona" fetch="select">
+        <many-to-one name="persona" class="org.socialweb.model.Persona" fetch="select" insert="false" update="false">
             <column name="persona" not-null="true" />
         </many-to-one>
-        <many-to-one name="tipoContacto" class="org.socialweb.model.TipoContacto" fetch="select">
+        <many-to-one name="tipoContacto" class="org.socialweb.model.TipoContacto" fetch="select" insert="false" update="false">
             <column name="tipo_contacto" not-null="true" />
         </many-to-one>
         <property name="valor" type="string">

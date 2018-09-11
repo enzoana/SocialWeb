@@ -11,11 +11,10 @@
         <property name="descripcion" type="string">
             <column name="descripcion" not-null="true" />
         </property>
-        <set name="personas" table="persona" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="estado" not-null="true" />
-            </key>
+        <list name="estadoPersona" table="persona" inverse="true" lazy="true" fetch="select">
+            <key column="estado" not-null="true" />
+            <list-index column="codigo"/>
             <one-to-many class="org.socialweb.model.Persona" />
-        </set>
+        </list>
     </class>
 </hibernate-mapping>

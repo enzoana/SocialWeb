@@ -7,11 +7,14 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -28,9 +31,9 @@ import javax.persistence.UniqueConstraint;
 public class Persona implements java.io.Serializable {
 
     private int codigo;
-    private Domicilio domicilioByDomicilioReal;
-    private Domicilio domicilioByDomicilioFiscal;
-    private Domicilio domicilioByDomicilioLegal;
+    private Domicilio domicilioReal;
+    private Domicilio domicilioFiscal;
+    private Domicilio domicilioLegal;
     private EstadoPersona estadoPersona;
     private Serializable cuitCuilCdi;
     private String usrCreate;
@@ -38,13 +41,13 @@ public class Persona implements java.io.Serializable {
     private String usrLastUpdate;
     private Date timeLastUpdate;
     private PersonaJuridica personaJuridica;
-        private PersonaHumana personaHumana;
-        private List<Contacto> contactos = new ArrayList<Contacto>(0);
+    private PersonaHumana personaHumana;
+    private List<Contacto> contactos = new ArrayList<Contacto>(0);
 
     public Persona() {}
 
     public Persona(int codigo,
-            Domicilio domicilioByDomicilioReal,
+            Domicilio domicilioReal,
             EstadoPersona estadoPersona,
             Serializable cuitCuilCdi,
             String usrCreate,
@@ -53,7 +56,7 @@ public class Persona implements java.io.Serializable {
             Date timeLastUpdate) {
 
         this.codigo = codigo;
-        this.domicilioByDomicilioReal = domicilioByDomicilioReal;
+        this.domicilioReal = domicilioReal;
         this.estadoPersona = estadoPersona;
         this.cuitCuilCdi = cuitCuilCdi;
         this.usrCreate = usrCreate;
@@ -63,9 +66,9 @@ public class Persona implements java.io.Serializable {
     }
 
     public Persona(int codigo,
-            Domicilio domicilioByDomicilioReal,
-            Domicilio domicilioByDomicilioFiscal,
-            Domicilio domicilioByDomicilioLegal,
+            Domicilio domicilioReal,
+            Domicilio domicilioFiscal,
+            Domicilio domicilioLegal,
             EstadoPersona estadoPersona,
             Serializable cuitCuilCdi,
             String usrCreate,
@@ -77,9 +80,9 @@ public class Persona implements java.io.Serializable {
             List<Contacto> contactos) {
 
         this.codigo = codigo;
-        this.domicilioByDomicilioReal = domicilioByDomicilioReal;
-        this.domicilioByDomicilioFiscal = domicilioByDomicilioFiscal;
-        this.domicilioByDomicilioLegal = domicilioByDomicilioLegal;
+        this.domicilioReal = domicilioReal;
+        this.domicilioFiscal = domicilioFiscal;
+        this.domicilioLegal = domicilioLegal;
         this.estadoPersona = estadoPersona;
         this.cuitCuilCdi = cuitCuilCdi;
         this.usrCreate = usrCreate;
@@ -92,7 +95,13 @@ public class Persona implements java.io.Serializable {
     }
 
     @Id
-    @Column(name="codigo", unique=true, nullable=false)
+    @SequenceGenerator(name="personaGenerator",
+            sequenceName="seq_codigo_persona")
+    @GeneratedValue(strategy=GenerationType.SEQUENCE,
+            generator="personaGenerator")
+    @Column(name="codigo",
+            unique=true,
+            nullable=false)
     public int getCodigo() {
         return this.codigo;
     }
@@ -102,39 +111,47 @@ public class Persona implements java.io.Serializable {
     }
 
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="domicilio_real",
-            nullable=false)
-    public Domicilio getDomicilioByDomicilioReal() {
-        return this.domicilioByDomicilioReal;
+    @JoinColumn(name="domicilioReal",
+            nullable=false,
+            insertable=false,
+            updatable=false)
+    public Domicilio getDomicilioReal() {
+        return this.domicilioReal;
     }
 
-    public void setDomicilioByDomicilioReal(Domicilio domicilioByDomicilioReal) {
-        this.domicilioByDomicilioReal = domicilioByDomicilioReal;
-    }
-
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="domicilio_fiscal")
-    public Domicilio getDomicilioByDomicilioFiscal() {
-        return this.domicilioByDomicilioFiscal;
-    }
-
-    public void setDomicilioByDomicilioFiscal(Domicilio domicilioByDomicilioFiscal) {
-        this.domicilioByDomicilioFiscal = domicilioByDomicilioFiscal;
+    public void setDomicilioReal(Domicilio domicilioReal) {
+        this.domicilioReal = domicilioReal;
     }
 
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="domicilio_legal")
-    public Domicilio getDomicilioByDomicilioLegal() {
-        return this.domicilioByDomicilioLegal;
+    @JoinColumn(name="domicilioFiscal",
+            insertable=false,
+            updatable=false)
+    public Domicilio getDomicilioFiscal() {
+        return this.domicilioFiscal;
     }
 
-    public void setDomicilioByDomicilioLegal(Domicilio domicilioByDomicilioLegal) {
-        this.domicilioByDomicilioLegal = domicilioByDomicilioLegal;
+    public void setDomicilioFiscal(Domicilio domicilioFiscal) {
+        this.domicilioFiscal = domicilioFiscal;
+    }
+
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="domicilioLegal",
+            insertable=false,
+            updatable=false)
+    public Domicilio getDomicilioLegal() {
+        return this.domicilioLegal;
+    }
+
+    public void setDomicilioLegal(Domicilio domicilioLegal) {
+        this.domicilioLegal = domicilioLegal;
     }
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="estado",
-            nullable=false)
+            nullable=false,
+            insertable=false,
+            updatable=false)
     public EstadoPersona getEstadoPersona() {
         return this.estadoPersona;
     }
@@ -199,7 +216,7 @@ public class Persona implements java.io.Serializable {
     }
 
     @OneToOne(fetch=FetchType.LAZY,
-            mappedBy="personaJuridica")
+            mappedBy="persona")
     public PersonaJuridica getPersonaJuridica() {
         return this.personaJuridica;
     }
@@ -209,7 +226,7 @@ public class Persona implements java.io.Serializable {
     }
 
     @OneToOne(fetch=FetchType.LAZY,
-            mappedBy="personaHumana")
+            mappedBy="persona")
     public PersonaHumana getPersonaHumana() {
         return this.personaHumana;
     }
@@ -219,7 +236,7 @@ public class Persona implements java.io.Serializable {
     }
 
     @OneToMany(fetch=FetchType.LAZY,
-            mappedBy="contactos")
+            mappedBy="persona")
     public List<Contacto> getContactos() {
         return this.contactos;
     }

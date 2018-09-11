@@ -63,7 +63,7 @@ public class EstadoCiudad implements java.io.Serializable {
     }
 
     @OneToMany(fetch=FetchType.LAZY,
-            mappedBy="ciudades")
+            mappedBy="estadoCiudad")
     public List<Ciudad> getCiudades() {
         return this.ciudades;
     }

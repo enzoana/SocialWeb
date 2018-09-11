@@ -60,8 +60,11 @@ public class PersonaJuridica implements java.io.Serializable {
             strategy="foreign",
             parameters=@Parameter(name="property",
                     value="persona"))
-    @Id @GeneratedValue(generator="generator")
-    @Column(name="persona", unique=true, nullable=false)
+    @Id
+    @GeneratedValue(generator="generator")
+    @Column(name="persona",
+            unique=true,
+            nullable=false)
     public int getPersonaForeign() {
         return this.personaForeign;
     }
@@ -82,7 +85,9 @@ public class PersonaJuridica implements java.io.Serializable {
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="tipo_persona_juridica",
-            nullable=false)
+            nullable=false,
+            insertable=false,
+            updatable=false)
     public TipoPersonaJuridica getTipoPersonaJuridica() {
         return this.tipoPersonaJuridica;
     }

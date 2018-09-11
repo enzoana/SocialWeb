@@ -6,10 +6,13 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -76,6 +79,10 @@ public class Ciudad implements java.io.Serializable {
     }
 
     @Id
+    @SequenceGenerator(name="ciudadGenerator",
+            sequenceName="seq_codigo_ciudad")
+    @GeneratedValue(strategy=GenerationType.SEQUENCE,
+            generator="diudadGenerator")
     @Column(name="codigo",
             unique=true,
             nullable=false)
@@ -88,7 +95,10 @@ public class Ciudad implements java.io.Serializable {
     }
 
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="estado", nullable=false)
+    @JoinColumn(name="estado",
+            nullable=false,
+            insertable=false,
+            updatable=false)
     public EstadoCiudad getEstadoCiudad() {
         return this.estadoCiudad;
     }
@@ -98,7 +108,10 @@ public class Ciudad implements java.io.Serializable {
     }
 
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="provincia", nullable=false)
+    @JoinColumn(name="provincia",
+            nullable=false,
+            insertable=false,
+            updatable=false)
     public Provincia getProvincia() {
         return this.provincia;
     }
@@ -107,7 +120,8 @@ public class Ciudad implements java.io.Serializable {
         this.provincia = provincia;
     }
 
-    @Column(name="nombre", nullable=false)
+    @Column(name="nombre",
+            nullable=false)
     public String getNombre() {
         return this.nombre;
     }
@@ -116,7 +130,8 @@ public class Ciudad implements java.io.Serializable {
         this.nombre = nombre;
     }
 
-    @Column(name="usr_create", nullable=false)
+    @Column(name="usr_create",
+            nullable=false)
     public String getUsrCreate() {
         return this.usrCreate;
     }
@@ -126,7 +141,9 @@ public class Ciudad implements java.io.Serializable {
     }
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="time_create", nullable=false, length=29)
+    @Column(name="time_create",
+            nullable=false,
+            length=29)
     public Date getTimeCreate() {
         return this.timeCreate;
     }
@@ -147,7 +164,8 @@ public class Ciudad implements java.io.Serializable {
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="time_last_update",
-            nullable=false, length=29)
+            nullable=false,
+            length=29)
     public Date getTimeLastUpdate() {
         return this.timeLastUpdate;
     }
@@ -156,7 +174,8 @@ public class Ciudad implements java.io.Serializable {
         this.timeLastUpdate = timeLastUpdate;
     }
 
-    @OneToMany(fetch=FetchType.LAZY, mappedBy="ciudad")
+    @OneToMany(fetch=FetchType.LAZY,
+            mappedBy="ciudad")
     public List<Domicilio> getDomicilios() {
         return this.domicilios;
     }

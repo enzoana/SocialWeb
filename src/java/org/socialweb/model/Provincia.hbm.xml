@@ -6,12 +6,14 @@
     <class name="org.socialweb.model.Provincia" table="provincia" schema="public" optimistic-lock="version">
         <id name="codigo" type="int">
             <column name="codigo" />
-            <generator class="assigned" />
+            <generator class="sequence">
+                <param name="sequence">seq_codigo_provincia</param>
+            </generator>
         </id>
-        <many-to-one name="estadoProvincia" class="org.socialweb.model.EstadoProvincia" fetch="select">
+        <many-to-one name="estadoProvincia" class="org.socialweb.model.EstadoProvincia" fetch="select" insert="false" update="false">
             <column name="estado" not-null="true" />
         </many-to-one>
-        <many-to-one name="pais" class="org.socialweb.model.Pais" fetch="select">
+        <many-to-one name="pais" class="org.socialweb.model.Pais" fetch="select" insert="false" update="false">
             <column name="pais" not-null="true" />
         </many-to-one>
         <property name="nombre" type="string">
@@ -32,11 +34,10 @@
         <property name="timeLastUpdate" type="timestamp">
             <column name="time_last_update" length="29" not-null="true" />
         </property>
-        <set name="ciudades" table="ciudad" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="provincia" not-null="true" />
-            </key>
+        <list name="provincia" table="ciudad" inverse="true" lazy="true" fetch="select">
+            <key column="provincia" not-null="true" />
+            <list-index column="codigo"/>
             <one-to-many class="org.socialweb.model.Ciudad" />
-        </set>
+        </list>
     </class>
 </hibernate-mapping>

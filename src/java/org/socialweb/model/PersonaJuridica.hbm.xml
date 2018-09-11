@@ -11,7 +11,7 @@
             </generator>
         </id>
         <one-to-one name="persona" class="org.socialweb.model.Persona" constrained="true"></one-to-one>
-        <many-to-one name="tipoPersonaJuridica" class="org.socialweb.model.TipoPersonaJuridica" fetch="select">
+        <many-to-one name="tipoPersonaJuridica" class="org.socialweb.model.TipoPersonaJuridica" fetch="select" insert="false" update="false">
             <column name="tipo_persona_juridica" not-null="true" />
         </many-to-one>
         <property name="razonSocial" type="string">

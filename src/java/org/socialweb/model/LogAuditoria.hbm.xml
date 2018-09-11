@@ -6,7 +6,9 @@
     <class name="org.socialweb.model.LogAuditoria" table="log_auditoria" schema="public" optimistic-lock="version">
         <id name="codigo" type="int">
             <column name="codigo" />
-            <generator class="assigned" />
+            <generator class="sequence">
+                <param name="sequence">seq_codigo_log_auditoria</param>
+            </generator>
         </id>
         <property name="fecha" type="timestamp">
             <column name="fecha" length="29" not-null="true" />

@@ -6,10 +6,13 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -91,9 +94,15 @@ public class Pais implements java.io.Serializable {
     }
 
     @Id
+    @SequenceGenerator(name="paisGenerator",
+            sequenceName="seq_codigo_pais")
+    @GeneratedValue(strategy=GenerationType.SEQUENCE,
+            generator="paisGenerator")
     @Column(name="codigo",
             unique=true,
-            nullable=false)
+            nullable=false,
+            insertable=false,
+            updatable=false)
     public int getCodigo() {
         return this.codigo;
     }
@@ -104,7 +113,9 @@ public class Pais implements java.io.Serializable {
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="estado",
-            nullable=false)
+            nullable=false,
+            insertable=false,
+            updatable=false)
     public EstadoPais getEstadoPais() {
         return this.estadoPais;
     }
@@ -208,7 +219,7 @@ public class Pais implements java.io.Serializable {
     }
 
     @OneToMany(fetch=FetchType.LAZY,
-        mappedBy="provincias")
+        mappedBy="pais")
     public List<Provincia> getProvincias() {
         return this.provincias;
     }

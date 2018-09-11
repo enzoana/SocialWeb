@@ -64,7 +64,7 @@ public class TipoPersonaJuridica implements java.io.Serializable {
     }
 
     @OneToMany(fetch=FetchType.LAZY,
-            mappedBy="personasJuridicas")
+            mappedBy="tipoPersonaJuridica")
     public List<PersonaJuridica> getPersonasJuridicas() {
         return this.personasJuridicas;
     }

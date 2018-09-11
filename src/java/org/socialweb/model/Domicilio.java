@@ -6,10 +6,13 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -82,7 +85,11 @@ public class Domicilio implements java.io.Serializable {
         this.personasConDomicilioLegal = personasConDomicilioLegal;
     }
 
-    @Id 
+    @Id
+    @SequenceGenerator(name="domicilioGenerator",
+            sequenceName="seq_codigo_domicilio")
+    @GeneratedValue(strategy=GenerationType.SEQUENCE,
+            generator="domicilioGenerator")
     @Column(name="codigo",
             unique=true,
             nullable=false)
@@ -96,7 +103,9 @@ public class Domicilio implements java.io.Serializable {
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="ciudad",
-            nullable=false)
+            nullable=false,
+            insertable=false,
+            updatable=false)
     public Ciudad getCiudad() {
         return this.ciudad;
     }
@@ -177,7 +186,8 @@ public class Domicilio implements java.io.Serializable {
         this.timeLastUpdate = timeLastUpdate;
     }
 
-    @OneToMany(fetch=FetchType.LAZY, mappedBy="personasConDomicilioReal")
+    @OneToMany(fetch=FetchType.LAZY,
+            mappedBy="domicilioReal")
     public List<Persona> getPersonasConDomicilioReal() {
         return this.personasConDomicilioReal;
     }
@@ -186,7 +196,8 @@ public class Domicilio implements java.io.Serializable {
         this.personasConDomicilioReal = personasConDomicilioReal;
     }
 
-    @OneToMany(fetch=FetchType.LAZY, mappedBy="personasConDomicilioFiscal")
+    @OneToMany(fetch=FetchType.LAZY,
+            mappedBy="domicilioFiscal")
     public List<Persona> getPersonasConDomicilioFiscal() {
         return this.personasConDomicilioFiscal;
     }
@@ -195,7 +206,8 @@ public class Domicilio implements java.io.Serializable {
         this.personasConDomicilioFiscal = personasConDomicilioFiscal;
     }
 
-    @OneToMany(fetch=FetchType.LAZY, mappedBy="personasConDomicilioLegal")
+    @OneToMany(fetch=FetchType.LAZY,
+            mappedBy="domicilioLegal")
     public List<Persona> getPersonasConDomicilioLegal() {
         return this.personasConDomicilioLegal;
     }

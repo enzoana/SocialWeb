@@ -6,18 +6,20 @@
     <class name="org.socialweb.model.Persona" table="persona" schema="public" optimistic-lock="version">
         <id name="codigo" type="int">
             <column name="codigo" />
-            <generator class="assigned" />
+            <generator class="sequence">
+                <param name="sequence">seq_codigo_persona</param>
+            </generator>
         </id>
-        <many-to-one name="domicilioByDomicilioReal" class="org.socialweb.model.Domicilio" fetch="select">
+        <many-to-one name="domicilioReal" class="org.socialweb.model.Domicilio" fetch="select" insert="false" update="false">
             <column name="domicilio_real" not-null="true" />
         </many-to-one>
-        <many-to-one name="domicilioByDomicilioFiscal" class="org.socialweb.model.Domicilio" fetch="select">
+        <many-to-one name="domicilioFiscal" class="org.socialweb.model.Domicilio" fetch="select" insert="false" update="false">
             <column name="domicilio_fiscal" />
         </many-to-one>
-        <many-to-one name="domicilioByDomicilioLegal" class="org.socialweb.model.Domicilio" fetch="select">
+        <many-to-one name="domicilioLegal" class="org.socialweb.model.Domicilio" fetch="select" insert="false" update="false">
             <column name="domicilio_legal" />
         </many-to-one>
-        <many-to-one name="estadoPersona" class="org.socialweb.model.EstadoPersona" fetch="select">
+        <many-to-one name="estadoPersona" class="org.socialweb.model.EstadoPersona" fetch="select" insert="false" update="false">
             <column name="estado" not-null="true" />
         </many-to-one>
         <property name="cuitCuilCdi" type="serializable">
@@ -37,11 +39,10 @@
         </property>
         <one-to-one name="personaJuridica" class="org.socialweb.model.PersonaJuridica"></one-to-one>
         <one-to-one name="personaHumana" class="org.socialweb.model.PersonaHumana"></one-to-one>
-        <set name="contactos" table="contacto" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="persona" not-null="true" />
-            </key>
+        <list name="persona" table="contacto" inverse="true" lazy="true" fetch="select">
+            <key column="persona" not-null="true" />
+            <list-index column="codigo"/>
             <one-to-many class="org.socialweb.model.Contacto" />
-        </set>
+        </list>
     </class>
 </hibernate-mapping>

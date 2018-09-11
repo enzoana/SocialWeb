@@ -14,11 +14,10 @@
         <property name="descripcionCorta" type="string">
             <column name="descripcion_corta" not-null="true" />
         </property>
-        <set name="personasHumanas" table="persona_humana" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="tipo_documento" not-null="true" />
-            </key>
+        <list name="tipoDocumento" table="persona_humana" inverse="true" lazy="true" fetch="select">
+            <key column="tipo_documento" not-null="true" />
+            <list-index column="codigo"/>
             <one-to-many class="org.socialweb.model.PersonaHumana" />
-        </set>
+        </list>
     </class>
 </hibernate-mapping>

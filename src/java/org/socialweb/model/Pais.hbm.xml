@@ -6,9 +6,11 @@
     <class name="org.socialweb.model.Pais" table="pais" schema="public" optimistic-lock="version">
         <id name="codigo" type="int">
             <column name="codigo" />
-            <generator class="assigned" />
+            <generator class="sequence">
+                <param name="sequence">seq_codigo_pais</param>
+            </generator>
         </id>
-        <many-to-one name="estadoPais" class="org.socialweb.model.EstadoPais" fetch="select">
+        <many-to-one name="estadoPais" class="org.socialweb.model.EstadoPais" fetch="select" insert="false" update="false">
             <column name="estado" not-null="true" />
         </many-to-one>
         <property name="nombre" type="string">
@@ -38,11 +40,10 @@
         <property name="timeLastUpdate" type="timestamp">
             <column name="time_last_update" length="29" not-null="true" />
         </property>
-        <set name="provincias" table="provincia" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="pais" not-null="true" />
-            </key>
+        <list name="pais" table="provincia" inverse="true" lazy="true" fetch="select">
+            <key column="pais" not-null="true" />
+            <list-index column="codigo" />
             <one-to-many class="org.socialweb.model.Provincia" />
-        </set>
+        </list>
     </class>
 </hibernate-mapping>

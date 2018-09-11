@@ -4,9 +4,12 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -50,7 +53,11 @@ public class Contacto implements java.io.Serializable {
         this.timeLastUpdate = timeLastUpdate;
     }
 
-    @Id 
+    @Id
+    @SequenceGenerator(name="contactoGenerator",
+            sequenceName="seq_codigo_contacto")
+    @GeneratedValue(strategy=GenerationType.SEQUENCE,
+            generator="contactoGenerator")
     @Column(name="codigo",
             unique=true,
             nullable=false)
@@ -64,7 +71,9 @@ public class Contacto implements java.io.Serializable {
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="persona",
-            nullable=false)
+            nullable=false,
+            insertable=false,
+            updatable=false)
     public Persona getPersona() {
         return this.persona;
     }
@@ -75,7 +84,9 @@ public class Contacto implements java.io.Serializable {
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="tipo_contacto",
-            nullable=false)
+            nullable=false,
+            insertable=false,
+            updatable=false)
     public TipoContacto getTipoContacto() {
         return this.tipoContacto;
     }

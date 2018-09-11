@@ -40,7 +40,8 @@ public class TipoContacto implements java.io.Serializable {
     }
 
     @Id
-    @Column(name="codigo", unique=true,
+    @Column(name="codigo",
+            unique=true,
             nullable=false)
     public int getCodigo() {
         return this.codigo;
@@ -61,7 +62,7 @@ public class TipoContacto implements java.io.Serializable {
     }
 
     @OneToMany(fetch=FetchType.LAZY,
-            mappedBy="contactos")
+            mappedBy="tipoContacto")
     public List<Contacto> getContactos() {
         return this.contactos;
     }
