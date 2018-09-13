@@ -4,8 +4,7 @@
 <!-- Generated 03/09/2018 17:25:25 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="org.socialweb.model.Pais" table="pais" schema="public" optimistic-lock="version">
-        <id name="codigo" type="int">
-            <column name="codigo" />
+        <id name="codigo" column="codigo" type="int" >
             <generator class="sequence">
                 <param name="sequence">seq_codigo_pais</param>
             </generator>
@@ -42,7 +41,7 @@
         </property>
         <list name="pais" table="provincia" inverse="true" lazy="true" fetch="select">
             <key column="pais" not-null="true" />
-            <list-index column="codigo" />
+            <list-index column="nombre" />
             <one-to-many class="org.socialweb.model.Provincia" />
         </list>
     </class>

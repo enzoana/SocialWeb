@@ -65,9 +65,12 @@ public class PersonaHumana implements java.io.Serializable {
                     value="persona"))
     @Id
     @GeneratedValue(generator="generator")
-    @Column(name="persona",
+    @JoinColumn(name="persona",
+            referencedColumnName="persona",
+            nullable=false,
             unique=true,
-            nullable=false)
+            insertable=false,
+            updatable=false)
     public int getPersonaForeign() {
         return this.personaForeign;
     }

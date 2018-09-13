@@ -2,10 +2,12 @@ package org.socialweb.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -41,9 +43,12 @@ public class EstadoCiudad implements java.io.Serializable {
     }
 
     @Id
-    @Column(name="codigo",
+    @JoinColumn(name="codigo",
+            referencedColumnName="codigo",
+            nullable=false,
             unique=true,
-            nullable=false)
+            insertable=false,
+            updatable=false)
     public int getCodigo() {
         return this.codigo;
     }
@@ -63,6 +68,7 @@ public class EstadoCiudad implements java.io.Serializable {
     }
 
     @OneToMany(fetch=FetchType.LAZY,
+            cascade=CascadeType.ALL,
             mappedBy="estadoCiudad")
     public List<Ciudad> getCiudades() {
         return this.ciudades;

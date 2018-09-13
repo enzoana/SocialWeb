@@ -3,6 +3,7 @@ package org.socialweb.model;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -90,9 +91,12 @@ public class Domicilio implements java.io.Serializable {
             sequenceName="seq_codigo_domicilio")
     @GeneratedValue(strategy=GenerationType.SEQUENCE,
             generator="domicilioGenerator")
-    @Column(name="codigo",
+    @JoinColumn(name="codigo",
+            referencedColumnName="codigo",
+            nullable=false,
             unique=true,
-            nullable=false)
+            insertable=false,
+            updatable=false)
     public int getCodigo() {
         return this.codigo;
     }
@@ -187,6 +191,7 @@ public class Domicilio implements java.io.Serializable {
     }
 
     @OneToMany(fetch=FetchType.LAZY,
+            cascade=CascadeType.ALL,
             mappedBy="domicilioReal")
     public List<Persona> getPersonasConDomicilioReal() {
         return this.personasConDomicilioReal;
@@ -197,6 +202,7 @@ public class Domicilio implements java.io.Serializable {
     }
 
     @OneToMany(fetch=FetchType.LAZY,
+            cascade=CascadeType.ALL,
             mappedBy="domicilioFiscal")
     public List<Persona> getPersonasConDomicilioFiscal() {
         return this.personasConDomicilioFiscal;
@@ -207,6 +213,7 @@ public class Domicilio implements java.io.Serializable {
     }
 
     @OneToMany(fetch=FetchType.LAZY,
+            cascade=CascadeType.ALL,
             mappedBy="domicilioLegal")
     public List<Persona> getPersonasConDomicilioLegal() {
         return this.personasConDomicilioLegal;

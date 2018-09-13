@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -99,9 +100,12 @@ public class Persona implements java.io.Serializable {
             sequenceName="seq_codigo_persona")
     @GeneratedValue(strategy=GenerationType.SEQUENCE,
             generator="personaGenerator")
-    @Column(name="codigo",
+    @JoinColumn(name="codigo",
+            referencedColumnName="codigo",
+            nullable=false,
             unique=true,
-            nullable=false)
+            insertable=false,
+            updatable=false)
     public int getCodigo() {
         return this.codigo;
     }
@@ -236,6 +240,7 @@ public class Persona implements java.io.Serializable {
     }
 
     @OneToMany(fetch=FetchType.LAZY,
+            cascade=CascadeType.ALL,
             mappedBy="persona")
     public List<Contacto> getContactos() {
         return this.contactos;

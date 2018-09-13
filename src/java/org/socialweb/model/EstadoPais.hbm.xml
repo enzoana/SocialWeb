@@ -4,8 +4,7 @@
 <!-- Generated 03/09/2018 17:25:25 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="org.socialweb.model.EstadoPais" table="estado_pais" schema="public" optimistic-lock="version">
-        <id name="codigo" type="int">
-            <column name="codigo" />
+        <id name="codigo" column="codigo" type="int" >
             <generator class="assigned" />
         </id>
         <property name="descripcion" type="string">

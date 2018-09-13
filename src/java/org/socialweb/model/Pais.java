@@ -3,6 +3,7 @@ package org.socialweb.model;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -98,9 +99,10 @@ public class Pais implements java.io.Serializable {
             sequenceName="seq_codigo_pais")
     @GeneratedValue(strategy=GenerationType.SEQUENCE,
             generator="paisGenerator")
-    @Column(name="codigo",
-            unique=true,
+    @JoinColumn(name="codigo",
+            referencedColumnName="codigo",
             nullable=false,
+            unique=true,
             insertable=false,
             updatable=false)
     public int getCodigo() {
@@ -219,7 +221,8 @@ public class Pais implements java.io.Serializable {
     }
 
     @OneToMany(fetch=FetchType.LAZY,
-        mappedBy="pais")
+            cascade=CascadeType.ALL,
+            mappedBy="pais")
     public List<Provincia> getProvincias() {
         return this.provincias;
     }

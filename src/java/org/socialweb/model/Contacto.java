@@ -58,9 +58,12 @@ public class Contacto implements java.io.Serializable {
             sequenceName="seq_codigo_contacto")
     @GeneratedValue(strategy=GenerationType.SEQUENCE,
             generator="contactoGenerator")
-    @Column(name="codigo",
+    @JoinColumn(name="codigo",
+            referencedColumnName="codigo",
+            nullable=false,
             unique=true,
-            nullable=false)
+            insertable=false,
+            updatable=false)
     public int getCodigo() {
         return this.codigo;
     }

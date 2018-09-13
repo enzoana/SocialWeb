@@ -4,8 +4,7 @@
 <!-- Generated 03/09/2018 17:25:25 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="org.socialweb.model.Provincia" table="provincia" schema="public" optimistic-lock="version">
-        <id name="codigo" type="int">
-            <column name="codigo" />
+        <id name="codigo" column="codigo" type="int" >
             <generator class="sequence">
                 <param name="sequence">seq_codigo_provincia</param>
             </generator>

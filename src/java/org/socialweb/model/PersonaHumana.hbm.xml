@@ -4,8 +4,7 @@
 <!-- Generated 03/09/2018 17:25:25 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="org.socialweb.model.PersonaHumana" table="persona_humana" schema="public" optimistic-lock="version">
-        <id name="personaForeign" type="int">
-            <column name="persona" />
+        <id name="codigo" column="codigo" type="int" >
             <generator class="foreign">
                 <param name="property">persona</param>
             </generator>

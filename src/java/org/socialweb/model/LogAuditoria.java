@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -65,9 +66,12 @@ public class LogAuditoria implements java.io.Serializable {
             sequenceName="seq_codigo_log_auditoria")
     @GeneratedValue(strategy=GenerationType.SEQUENCE,
             generator="logAuditoriaGenerator")
-    @Column(name="codigo",
+    @JoinColumn(name="codigo",
+            referencedColumnName="codigo",
+            nullable=false,
             unique=true,
-            nullable=false)
+            insertable=false,
+            updatable=false)
     public int getCodigo() {
         return this.codigo;
     }
