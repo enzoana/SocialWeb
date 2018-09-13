@@ -51,21 +51,21 @@ Contributor(s):
     <property name="hibernate.show_sql">true</property>
     <property name="hibernate.current_session_context_class">thread</property>
     <property name="hibernate.query.factory_class">org.hibernate.hql.internal.classic.ClassicQueryTranslatorFactory</property>
-    <mapping resource="org/socialweb/model/PersonaJuridica.hbm.xml"/>
-    <mapping resource="org/socialweb/model/TipoContacto.hbm.xml"/>
-    <mapping resource="org/socialweb/model/Persona.hbm.xml"/>
-    <mapping resource="org/socialweb/model/TipoPersonaJuridica.hbm.xml"/>
     <mapping resource="org/socialweb/model/Ciudad.hbm.xml"/>
     <mapping resource="org/socialweb/model/Contacto.hbm.xml"/>
+    <mapping resource="org/socialweb/model/Domicilio.hbm.xml"/>
+    <mapping resource="org/socialweb/model/EstadoCiudad.hbm.xml"/>
     <mapping resource="org/socialweb/model/EstadoPais.hbm.xml"/>
     <mapping resource="org/socialweb/model/EstadoPersona.hbm.xml"/>
     <mapping resource="org/socialweb/model/EstadoProvincia.hbm.xml"/>
     <mapping resource="org/socialweb/model/LogAuditoria.hbm.xml"/>
     <mapping resource="org/socialweb/model/Pais.hbm.xml"/>
-    <mapping resource="org/socialweb/model/Provincia.hbm.xml"/>
-    <mapping resource="org/socialweb/model/Domicilio.hbm.xml"/>
-    <mapping resource="org/socialweb/model/EstadoCiudad.hbm.xml"/>
+    <mapping resource="org/socialweb/model/Persona.hbm.xml"/>
     <mapping resource="org/socialweb/model/PersonaHumana.hbm.xml"/>
+    <mapping resource="org/socialweb/model/PersonaJuridica.hbm.xml"/>
+    <mapping resource="org/socialweb/model/Provincia.hbm.xml"/>
+    <mapping resource="org/socialweb/model/TipoContacto.hbm.xml"/>
     <mapping resource="org/socialweb/model/TipoDocumento.hbm.xml"/>
+    <mapping resource="org/socialweb/model/TipoPersonaJuridica.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>
