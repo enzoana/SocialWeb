@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.socialweb.model;
 
 import java.io.Serializable;
@@ -20,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -36,72 +32,103 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(catalog = "socialweb", schema = "public")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Domicilio.findAll", query = "SELECT d FROM Domicilio d")
-    , @NamedQuery(name = "Domicilio.findByCodigo", query = "SELECT d FROM Domicilio d WHERE d.codigo = :codigo")
-    , @NamedQuery(name = "Domicilio.findByCalle", query = "SELECT d FROM Domicilio d WHERE d.calle = :calle")
-    , @NamedQuery(name = "Domicilio.findByNumero", query = "SELECT d FROM Domicilio d WHERE d.numero = :numero")
-    , @NamedQuery(name = "Domicilio.findByDepartamento", query = "SELECT d FROM Domicilio d WHERE d.departamento = :departamento")
-    , @NamedQuery(name = "Domicilio.findByUsrCreate", query = "SELECT d FROM Domicilio d WHERE d.usrCreate = :usrCreate")
-    , @NamedQuery(name = "Domicilio.findByTimeCreate", query = "SELECT d FROM Domicilio d WHERE d.timeCreate = :timeCreate")
-    , @NamedQuery(name = "Domicilio.findByUsrLastUpdate", query = "SELECT d FROM Domicilio d WHERE d.usrLastUpdate = :usrLastUpdate")
-    , @NamedQuery(name = "Domicilio.findByTimeLastUpdate", query = "SELECT d FROM Domicilio d WHERE d.timeLastUpdate = :timeLastUpdate")})
+    @NamedQuery(name = "Domicilio.findAll",
+            query = "SELECT d FROM Domicilio d"),
+    @NamedQuery(name = "Domicilio.findByCodigo",
+            query = "SELECT d FROM Domicilio d WHERE d.codigo = :codigo")})
 public class Domicilio implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "domicilioGenerator",
+            sequenceName = "seq_codigo_domicilio")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+            generator = "domicilioGenerator")
     @Basic(optional = false)
-    @Column(nullable = false)
+    @Column(name = "codigo",
+            nullable = false,
+            updatable = false)
     private Integer codigo;
+
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(nullable = false, length = 2147483647)
+    @Size(min = 1,
+            max = 2147483647)
+    @Column(nullable = false,
+            length = 2147483647)
     private String calle;
+
     @Size(max = 2147483647)
     @Column(length = 2147483647)
     private String numero;
+
     @Size(max = 2147483647)
     @Column(length = 2147483647)
     private String departamento;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(name = "usr_create", nullable = false, length = 2147483647)
-    private String usrCreate;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "time_create", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date timeCreate;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(name = "usr_last_update", nullable = false, length = 2147483647)
-    private String usrLastUpdate;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "time_last_update", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date timeLastUpdate;
-    @OneToMany(mappedBy = "domicilioFiscal")
-    private Set<Persona> personaSet;
-    @OneToMany(mappedBy = "domicilioLegal")
-    private Set<Persona> personaSet1;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "domicilioReal")
-    private Set<Persona> personaSet2;
-    @JoinColumn(name = "ciudad", referencedColumnName = "codigo", nullable = false)
+
+    @JoinColumn(name = "ciudad",
+            referencedColumnName = "codigo",
+            nullable = false)
     @ManyToOne(optional = false)
     private Ciudad ciudad;
 
-    public Domicilio() {
-    }
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1,
+            max = 2147483647)
+    @Column(name = "usr_create",
+            nullable = false,
+            length = 2147483647)
+    private String usrCreate;
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "time_create",
+            nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date timeCreate;
+
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1,
+            max = 2147483647)
+    @Column(name = "usr_last_update",
+            nullable = false,
+            length = 2147483647)
+    private String usrLastUpdate;
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "time_last_update",
+            nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date timeLastUpdate;
+
+    @OneToMany(cascade = CascadeType.ALL,
+            mappedBy = "domicilioReal")
+    private Set<Persona> domiciliosRealesPersonas;
+
+    @OneToMany(cascade = CascadeType.ALL,
+            mappedBy = "domicilioFiscal")
+    private Set<Persona> domiciliosFiscalesPersonas;
+
+    @OneToMany(cascade = CascadeType.ALL,
+            mappedBy = "domicilioLegal")
+    private Set<Persona> domiciliosLegalesPersonas;
+
+    public Domicilio() {}
 
     public Domicilio(Integer codigo) {
         this.codigo = codigo;
     }
 
-    public Domicilio(Integer codigo, String calle, String usrCreate, Date timeCreate, String usrLastUpdate, Date timeLastUpdate) {
+    public Domicilio(Integer codigo,
+            String calle,
+            String usrCreate,
+            Date timeCreate,
+            String usrLastUpdate,
+            Date timeLastUpdate) {
         this.codigo = codigo;
         this.calle = calle;
         this.usrCreate = usrCreate;
@@ -142,6 +169,14 @@ public class Domicilio implements Serializable {
         this.departamento = departamento;
     }
 
+    public Ciudad getCiudad() {
+        return ciudad;
+    }
+
+    public void setCiudad(Ciudad ciudad) {
+        this.ciudad = ciudad;
+    }
+
     public String getUsrCreate() {
         return usrCreate;
     }
@@ -175,38 +210,30 @@ public class Domicilio implements Serializable {
     }
 
     @XmlTransient
-    public Set<Persona> getPersonaSet() {
-        return personaSet;
+    public Set<Persona> getDomiciliosRealesPersonas() {
+        return domiciliosRealesPersonas;
     }
 
-    public void setPersonaSet(Set<Persona> personaSet) {
-        this.personaSet = personaSet;
-    }
-
-    @XmlTransient
-    public Set<Persona> getPersonaSet1() {
-        return personaSet1;
-    }
-
-    public void setPersonaSet1(Set<Persona> personaSet1) {
-        this.personaSet1 = personaSet1;
+    public void setDomiciliosRealesPersonas(Set<Persona> domiciliosRealesPersonas) {
+        this.domiciliosRealesPersonas = domiciliosRealesPersonas;
     }
 
     @XmlTransient
-    public Set<Persona> getPersonaSet2() {
-        return personaSet2;
+    public Set<Persona> getDomiciliosFiscalesPersonas() {
+        return domiciliosFiscalesPersonas;
     }
 
-    public void setPersonaSet2(Set<Persona> personaSet2) {
-        this.personaSet2 = personaSet2;
+    public void setDomiciliosFiscalesPersonas(Set<Persona> domiciliosFiscalesPersonas) {
+        this.domiciliosFiscalesPersonas = domiciliosFiscalesPersonas;
     }
 
-    public Ciudad getCiudad() {
-        return ciudad;
+    @XmlTransient
+    public Set<Persona> getDomiciliosLegalesPersonas() {
+        return domiciliosLegalesPersonas;
     }
 
-    public void setCiudad(Ciudad ciudad) {
-        this.ciudad = ciudad;
+    public void setDomiciliosLegalesPersonas(Set<Persona> domiciliosLegalesPersonas) {
+        this.domiciliosLegalesPersonas = domiciliosLegalesPersonas;
     }
 
     @Override
@@ -233,5 +260,4 @@ public class Domicilio implements Serializable {
     public String toString() {
         return "org.socialweb.model.Domicilio[ codigo=" + codigo + " ]";
     }
-    
 }

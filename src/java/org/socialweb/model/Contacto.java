@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.socialweb.model;
 
 import java.io.Serializable;
@@ -17,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -29,64 +25,93 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author enzo
  */
 @Entity
-@Table(catalog = "socialweb", schema = "public")
+@Table(catalog = "socialweb",
+        schema = "public")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Contacto.findAll", query = "SELECT c FROM Contacto c")
-    , @NamedQuery(name = "Contacto.findByCodigo", query = "SELECT c FROM Contacto c WHERE c.codigo = :codigo")
-    , @NamedQuery(name = "Contacto.findByValor", query = "SELECT c FROM Contacto c WHERE c.valor = :valor")
-    , @NamedQuery(name = "Contacto.findByUsrCreate", query = "SELECT c FROM Contacto c WHERE c.usrCreate = :usrCreate")
-    , @NamedQuery(name = "Contacto.findByTimeCreate", query = "SELECT c FROM Contacto c WHERE c.timeCreate = :timeCreate")
-    , @NamedQuery(name = "Contacto.findByUsrLastUpdate", query = "SELECT c FROM Contacto c WHERE c.usrLastUpdate = :usrLastUpdate")
-    , @NamedQuery(name = "Contacto.findByTimeLastUpdate", query = "SELECT c FROM Contacto c WHERE c.timeLastUpdate = :timeLastUpdate")})
+    @NamedQuery(name = "Contacto.findAll",
+            query = "SELECT c FROM Contacto c")
+    , @NamedQuery(name = "Contacto.findByCodigo",
+            query = "SELECT c FROM Contacto c WHERE c.codigo = :codigo")})
 public class Contacto implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "contactoGenerator",
+            sequenceName = "seq_codigo_contacto")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+            generator = "contactoGenerator")
     @Basic(optional = false)
-    @Column(nullable = false)
+    @Column(name = "codigo",
+            nullable = false,
+            updatable = false)
     private Integer codigo;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(nullable = false, length = 2147483647)
-    private String valor;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(name = "usr_create", nullable = false, length = 2147483647)
-    private String usrCreate;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "time_create", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date timeCreate;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(name = "usr_last_update", nullable = false, length = 2147483647)
-    private String usrLastUpdate;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "time_last_update", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date timeLastUpdate;
-    @JoinColumn(name = "persona", referencedColumnName = "codigo", nullable = false)
-    @ManyToOne(optional = false)
-    private Persona persona;
-    @JoinColumn(name = "tipo_contacto", referencedColumnName = "codigo", nullable = false)
+
+    @JoinColumn(name = "tipo_contacto",
+            referencedColumnName = "codigo",
+            nullable = false)
     @ManyToOne(optional = false)
     private TipoContacto tipoContacto;
 
-    public Contacto() {
-    }
+    @JoinColumn(name = "persona",
+            referencedColumnName = "codigo",
+            nullable = false)
+    @ManyToOne(optional = false)
+    private Persona persona;
+
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1,
+            max = 2147483647)
+    @Column(nullable = false,
+            length = 2147483647)
+    private String valor;
+
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1,
+            max = 2147483647)
+    @Column(name = "usr_create",
+            nullable = false,
+            length = 2147483647)
+    private String usrCreate;
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "time_create",
+            nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date timeCreate;
+
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1,
+            max = 2147483647)
+    @Column(name = "usr_last_update",
+            nullable = false,
+            length = 2147483647)
+    private String usrLastUpdate;
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "time_last_update",
+            nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date timeLastUpdate;
+
+    public Contacto() {}
 
     public Contacto(Integer codigo) {
         this.codigo = codigo;
     }
 
-    public Contacto(Integer codigo, String valor, String usrCreate, Date timeCreate, String usrLastUpdate, Date timeLastUpdate) {
+    public Contacto(Integer codigo,
+            String valor,
+            String usrCreate,
+            Date timeCreate,
+            String usrLastUpdate,
+            Date timeLastUpdate) {
         this.codigo = codigo;
         this.valor = valor;
         this.usrCreate = usrCreate;
@@ -101,6 +126,22 @@ public class Contacto implements Serializable {
 
     public void setCodigo(Integer codigo) {
         this.codigo = codigo;
+    }
+
+    public TipoContacto getTipoContacto() {
+        return tipoContacto;
+    }
+
+    public void setTipoContacto(TipoContacto tipoContacto) {
+        this.tipoContacto = tipoContacto;
+    }
+
+    public Persona getPersona() {
+        return persona;
+    }
+
+    public void setPersona(Persona persona) {
+        this.persona = persona;
     }
 
     public String getValor() {
@@ -143,22 +184,6 @@ public class Contacto implements Serializable {
         this.timeLastUpdate = timeLastUpdate;
     }
 
-    public Persona getPersona() {
-        return persona;
-    }
-
-    public void setPersona(Persona persona) {
-        this.persona = persona;
-    }
-
-    public TipoContacto getTipoContacto() {
-        return tipoContacto;
-    }
-
-    public void setTipoContacto(TipoContacto tipoContacto) {
-        this.tipoContacto = tipoContacto;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -183,5 +208,4 @@ public class Contacto implements Serializable {
     public String toString() {
         return "org.socialweb.model.Contacto[ codigo=" + codigo + " ]";
     }
-    
 }

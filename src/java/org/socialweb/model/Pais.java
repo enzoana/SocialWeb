@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.socialweb.model;
 
 import java.io.Serializable;
@@ -20,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -33,86 +29,128 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author enzo
  */
 @Entity
-@Table(catalog = "socialweb", schema = "public")
+@Table(catalog = "socialweb",
+        schema = "public")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Pais.findAll", query = "SELECT p FROM Pais p")
-    , @NamedQuery(name = "Pais.findByCodigo", query = "SELECT p FROM Pais p WHERE p.codigo = :codigo")
-    , @NamedQuery(name = "Pais.findByNombre", query = "SELECT p FROM Pais p WHERE p.nombre = :nombre")
-    , @NamedQuery(name = "Pais.findByNombreIso", query = "SELECT p FROM Pais p WHERE p.nombreIso = :nombreIso")
-    , @NamedQuery(name = "Pais.findByCodigoIsoAlfa2", query = "SELECT p FROM Pais p WHERE p.codigoIsoAlfa2 = :codigoIsoAlfa2")
-    , @NamedQuery(name = "Pais.findByCodigoIsoAlfa3", query = "SELECT p FROM Pais p WHERE p.codigoIsoAlfa3 = :codigoIsoAlfa3")
-    , @NamedQuery(name = "Pais.findByCodigoIso", query = "SELECT p FROM Pais p WHERE p.codigoIso = :codigoIso")
-    , @NamedQuery(name = "Pais.findByUsrCreate", query = "SELECT p FROM Pais p WHERE p.usrCreate = :usrCreate")
-    , @NamedQuery(name = "Pais.findByTimeCreate", query = "SELECT p FROM Pais p WHERE p.timeCreate = :timeCreate")
-    , @NamedQuery(name = "Pais.findByUsrLastUpdate", query = "SELECT p FROM Pais p WHERE p.usrLastUpdate = :usrLastUpdate")
-    , @NamedQuery(name = "Pais.findByTimeLastUpdate", query = "SELECT p FROM Pais p WHERE p.timeLastUpdate = :timeLastUpdate")})
+    @NamedQuery(name = "Pais.findAll",
+            query = "SELECT p FROM Pais p"),
+    @NamedQuery(name = "Pais.findByCodigo",
+            query = "SELECT p FROM Pais p WHERE p.codigo = :codigo")})
 public class Pais implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "paisGenerator",
+            sequenceName = "seq_codigo_pais")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+            generator = "paisGenerator")
     @Basic(optional = false)
-    @Column(nullable = false)
+    @Column(name = "codigo",
+            nullable = false,
+            updatable = false)
     private Integer codigo;
+
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(nullable = false, length = 2147483647)
+    @Size(min = 1,
+            max = 2147483647)
+    @Column(nullable = false,
+            length = 2147483647)
     private String nombre;
+
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(name = "nombre_iso", nullable = false, length = 2147483647)
+    @Size(min = 1,
+            max = 2147483647)
+    @Column(name = "nombre_iso",
+            nullable = false,
+            length = 2147483647)
     private String nombreIso;
+
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(name = "codigo_iso_alfa_2", nullable = false, length = 2147483647)
+    @Size(min = 1,
+            max = 2147483647)
+    @Column(name = "codigo_iso_alfa_2",
+            nullable = false,
+            length = 2147483647)
     private String codigoIsoAlfa2;
+
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(name = "codigo_iso_alfa_3", nullable = false, length = 2147483647)
+    @Size(min = 1,
+            max = 2147483647)
+    @Column(name = "codigo_iso_alfa_3",
+            nullable = false,
+            length = 2147483647)
     private String codigoIsoAlfa3;
+
     @Basic(optional = false)
     @NotNull
-    @Column(name = "codigo_iso", nullable = false)
+    @Column(name = "codigo_iso",
+            nullable = false)
     private int codigoIso;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(name = "usr_create", nullable = false, length = 2147483647)
-    private String usrCreate;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "time_create", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date timeCreate;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(name = "usr_last_update", nullable = false, length = 2147483647)
-    private String usrLastUpdate;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "time_last_update", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date timeLastUpdate;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pais")
-    private Set<Provincia> provinciaSet;
-    @JoinColumn(name = "estado", referencedColumnName = "codigo", nullable = false)
+
+    @JoinColumn(name = "estado",
+            referencedColumnName = "codigo",
+            nullable = false)
     @ManyToOne(optional = false)
     private EstadoPais estado;
 
-    public Pais() {
-    }
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1,
+            max = 2147483647)
+    @Column(name = "usr_create",
+            nullable = false,
+            length = 2147483647)
+    private String usrCreate;
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "time_create",
+            nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date timeCreate;
+
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1,
+            max = 2147483647)
+    @Column(name = "usr_last_update",
+            nullable = false,
+            length = 2147483647)
+    private String usrLastUpdate;
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "time_last_update",
+            nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date timeLastUpdate;
+
+    @OneToMany(cascade = CascadeType.ALL,
+            mappedBy = "pais")
+    private Set<Provincia> provincias;
+
+    public Pais() {}
 
     public Pais(Integer codigo) {
         this.codigo = codigo;
     }
 
-    public Pais(Integer codigo, String nombre, String nombreIso, String codigoIsoAlfa2, String codigoIsoAlfa3, int codigoIso, String usrCreate, Date timeCreate, String usrLastUpdate, Date timeLastUpdate) {
+    public Pais(Integer codigo,
+            String nombre,
+            String nombreIso,
+            String codigoIsoAlfa2,
+            String codigoIsoAlfa3,
+            int codigoIso,
+            String usrCreate,
+            Date timeCreate,
+            String usrLastUpdate,
+            Date timeLastUpdate) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.nombreIso = nombreIso;
@@ -173,6 +211,14 @@ public class Pais implements Serializable {
         this.codigoIso = codigoIso;
     }
 
+    public EstadoPais getEstado() {
+        return estado;
+    }
+
+    public void setEstado(EstadoPais estado) {
+        this.estado = estado;
+    }
+
     public String getUsrCreate() {
         return usrCreate;
     }
@@ -206,20 +252,12 @@ public class Pais implements Serializable {
     }
 
     @XmlTransient
-    public Set<Provincia> getProvinciaSet() {
-        return provinciaSet;
+    public Set<Provincia> getProvincias() {
+        return provincias;
     }
 
-    public void setProvinciaSet(Set<Provincia> provinciaSet) {
-        this.provinciaSet = provinciaSet;
-    }
-
-    public EstadoPais getEstado() {
-        return estado;
-    }
-
-    public void setEstado(EstadoPais estado) {
-        this.estado = estado;
+    public void setProvincias(Set<Provincia> provincias) {
+        this.provincias = provincias;
     }
 
     @Override
@@ -246,5 +284,4 @@ public class Pais implements Serializable {
     public String toString() {
         return "org.socialweb.model.Pais[ codigo=" + codigo + " ]";
     }
-    
 }

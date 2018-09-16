@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.socialweb.model;
 
 import java.io.Serializable;
@@ -11,6 +6,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -26,36 +22,47 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author enzo
  */
 @Entity
-@Table(name = "estado_provincia", catalog = "socialweb", schema = "public")
+@Table(name = "estado_provincia",
+        catalog = "socialweb",
+        schema = "public")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "EstadoProvincia.findAll", query = "SELECT e FROM EstadoProvincia e")
-    , @NamedQuery(name = "EstadoProvincia.findByCodigo", query = "SELECT e FROM EstadoProvincia e WHERE e.codigo = :codigo")
-    , @NamedQuery(name = "EstadoProvincia.findByDescripcion", query = "SELECT e FROM EstadoProvincia e WHERE e.descripcion = :descripcion")})
+    @NamedQuery(name = "EstadoProvincia.findAll",
+            query = "SELECT e FROM EstadoProvincia e"),
+    @NamedQuery(name = "EstadoProvincia.findByCodigo",
+            query = "SELECT e FROM EstadoProvincia e WHERE e.codigo = :codigo")})
 public class EstadoProvincia implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @Basic(optional = false)
-    @NotNull
-    @Column(nullable = false)
+    @Column(name = "codigo",
+            nullable = false,
+            updatable = false)
     private Integer codigo;
+
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(nullable = false, length = 2147483647)
+    @Size(min = 1,
+            max = 2147483647)
+    @Column(nullable = false,
+            length = 2147483647)
     private String descripcion;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "estado")
-    private Set<Provincia> provinciaSet;
 
-    public EstadoProvincia() {
-    }
+    @OneToMany(fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            mappedBy = "estado")
+    private Set<Provincia> provincias;
+
+    public EstadoProvincia() {}
 
     public EstadoProvincia(Integer codigo) {
         this.codigo = codigo;
     }
 
-    public EstadoProvincia(Integer codigo, String descripcion) {
+    public EstadoProvincia(Integer codigo,
+            String descripcion) {
         this.codigo = codigo;
         this.descripcion = descripcion;
     }
@@ -77,12 +84,12 @@ public class EstadoProvincia implements Serializable {
     }
 
     @XmlTransient
-    public Set<Provincia> getProvinciaSet() {
-        return provinciaSet;
+    public Set<Provincia> getProvincias() {
+        return provincias;
     }
 
-    public void setProvinciaSet(Set<Provincia> provinciaSet) {
-        this.provinciaSet = provinciaSet;
+    public void setProvincias(Set<Provincia> provincias) {
+        this.provincias = provincias;
     }
 
     @Override
@@ -109,5 +116,4 @@ public class EstadoProvincia implements Serializable {
     public String toString() {
         return "org.socialweb.model.EstadoProvincia[ codigo=" + codigo + " ]";
     }
-    
 }

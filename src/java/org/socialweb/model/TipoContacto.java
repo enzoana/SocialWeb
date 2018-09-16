@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.socialweb.model;
 
 import java.io.Serializable;
@@ -26,30 +21,38 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author enzo
  */
 @Entity
-@Table(name = "tipo_contacto", catalog = "socialweb", schema = "public")
+@Table(name = "tipo_contacto",
+        catalog = "socialweb",
+        schema = "public")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "TipoContacto.findAll", query = "SELECT t FROM TipoContacto t")
-    , @NamedQuery(name = "TipoContacto.findByCodigo", query = "SELECT t FROM TipoContacto t WHERE t.codigo = :codigo")
-    , @NamedQuery(name = "TipoContacto.findByDescripcion", query = "SELECT t FROM TipoContacto t WHERE t.descripcion = :descripcion")})
+    @NamedQuery(name = "TipoContacto.findAll",
+            query = "SELECT t FROM TipoContacto t"),
+    @NamedQuery(name = "TipoContacto.findByCodigo",
+            query = "SELECT t FROM TipoContacto t WHERE t.codigo = :codigo")})
 public class TipoContacto implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @Basic(optional = false)
     @NotNull
     @Column(nullable = false)
     private Integer codigo;
+
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(nullable = false, length = 2147483647)
+    @Size(min = 1,
+            max = 2147483647)
+    @Column(nullable = false,
+            length = 2147483647)
     private String descripcion;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoContacto")
-    private Set<Contacto> contactoSet;
 
-    public TipoContacto() {
-    }
+    @OneToMany(cascade = CascadeType.ALL,
+            mappedBy = "tipoContacto")
+    private Set<Contacto> contactos;
+
+    public TipoContacto() {}
 
     public TipoContacto(Integer codigo) {
         this.codigo = codigo;
@@ -77,12 +80,12 @@ public class TipoContacto implements Serializable {
     }
 
     @XmlTransient
-    public Set<Contacto> getContactoSet() {
-        return contactoSet;
+    public Set<Contacto> getContactos() {
+        return contactos;
     }
 
-    public void setContactoSet(Set<Contacto> contactoSet) {
-        this.contactoSet = contactoSet;
+    public void setContactos(Set<Contacto> contactos) {
+        this.contactos = contactos;
     }
 
     @Override
@@ -109,5 +112,4 @@ public class TipoContacto implements Serializable {
     public String toString() {
         return "org.socialweb.model.TipoContacto[ codigo=" + codigo + " ]";
     }
-    
 }

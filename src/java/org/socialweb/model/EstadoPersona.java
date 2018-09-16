@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.socialweb.model;
 
 import java.io.Serializable;
@@ -26,36 +21,46 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author enzo
  */
 @Entity
-@Table(name = "estado_persona", catalog = "socialweb", schema = "public")
+@Table(name = "estado_persona",
+        catalog = "socialweb",
+        schema = "public")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "EstadoPersona.findAll", query = "SELECT e FROM EstadoPersona e")
-    , @NamedQuery(name = "EstadoPersona.findByCodigo", query = "SELECT e FROM EstadoPersona e WHERE e.codigo = :codigo")
-    , @NamedQuery(name = "EstadoPersona.findByDescripcion", query = "SELECT e FROM EstadoPersona e WHERE e.descripcion = :descripcion")})
+    @NamedQuery(name = "EstadoPersona.findAll",
+            query = "SELECT e FROM EstadoPersona e"),
+    @NamedQuery(name = "EstadoPersona.findByCodigo",
+            query = "SELECT e FROM EstadoPersona e WHERE e.codigo = :codigo")})
 public class EstadoPersona implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @Basic(optional = false)
-    @NotNull
-    @Column(nullable = false)
+    @Column(name = "codigo",
+            nullable = false,
+            updatable = false)
     private Integer codigo;
+
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(nullable = false, length = 2147483647)
+    @Size(min = 1,
+            max = 2147483647)
+    @Column(nullable = false,
+            length = 2147483647)
     private String descripcion;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "estado")
-    private Set<Persona> personaSet;
 
-    public EstadoPersona() {
-    }
+    @OneToMany(cascade = CascadeType.ALL,
+            mappedBy = "estado")
+    private Set<Persona> personas;
+
+    public EstadoPersona() {}
 
     public EstadoPersona(Integer codigo) {
         this.codigo = codigo;
     }
 
-    public EstadoPersona(Integer codigo, String descripcion) {
+    public EstadoPersona(Integer codigo,
+            String descripcion) {
         this.codigo = codigo;
         this.descripcion = descripcion;
     }
@@ -78,11 +83,11 @@ public class EstadoPersona implements Serializable {
 
     @XmlTransient
     public Set<Persona> getPersonaSet() {
-        return personaSet;
+        return personas;
     }
 
-    public void setPersonaSet(Set<Persona> personaSet) {
-        this.personaSet = personaSet;
+    public void setPersonaSet(Set<Persona> personas) {
+        this.personas = personas;
     }
 
     @Override
@@ -109,5 +114,4 @@ public class EstadoPersona implements Serializable {
     public String toString() {
         return "org.socialweb.model.EstadoPersona[ codigo=" + codigo + " ]";
     }
-    
 }

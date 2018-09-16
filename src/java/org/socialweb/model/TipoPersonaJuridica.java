@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.socialweb.model;
 
 import java.io.Serializable;
@@ -26,30 +21,36 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author enzo
  */
 @Entity
-@Table(name = "tipo_persona_juridica", catalog = "socialweb", schema = "public")
+@Table(name = "tipo_persona_juridica",
+        catalog = "socialweb",
+        schema = "public")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "TipoPersonaJuridica.findAll", query = "SELECT t FROM TipoPersonaJuridica t")
-    , @NamedQuery(name = "TipoPersonaJuridica.findByCodigo", query = "SELECT t FROM TipoPersonaJuridica t WHERE t.codigo = :codigo")
-    , @NamedQuery(name = "TipoPersonaJuridica.findByDescripcion", query = "SELECT t FROM TipoPersonaJuridica t WHERE t.descripcion = :descripcion")})
+    @NamedQuery(name = "TipoPersonaJuridica.findAll",
+            query = "SELECT t FROM TipoPersonaJuridica t"),
+    @NamedQuery(name = "TipoPersonaJuridica.findByCodigo",
+            query = "SELECT t FROM TipoPersonaJuridica t WHERE t.codigo = :codigo")})
 public class TipoPersonaJuridica implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @Basic(optional = false)
     @NotNull
     @Column(nullable = false)
     private Integer codigo;
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 2147483647)
     @Column(nullable = false, length = 2147483647)
     private String descripcion;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoPersonaJuridica")
-    private Set<PersonaJuridica> personaJuridicaSet;
 
-    public TipoPersonaJuridica() {
-    }
+    @OneToMany(cascade = CascadeType.ALL,
+            mappedBy = "tipoPersonaJuridica")
+    private Set<PersonaJuridica> personasJuridicas;
+
+    public TipoPersonaJuridica() {}
 
     public TipoPersonaJuridica(Integer codigo) {
         this.codigo = codigo;
@@ -77,12 +78,12 @@ public class TipoPersonaJuridica implements Serializable {
     }
 
     @XmlTransient
-    public Set<PersonaJuridica> getPersonaJuridicaSet() {
-        return personaJuridicaSet;
+    public Set<PersonaJuridica> getPersonasJuridicas() {
+        return personasJuridicas;
     }
 
-    public void setPersonaJuridicaSet(Set<PersonaJuridica> personaJuridicaSet) {
-        this.personaJuridicaSet = personaJuridicaSet;
+    public void setPersonaJuridicaSet(Set<PersonaJuridica> personasJuridicas) {
+        this.personasJuridicas = personasJuridicas;
     }
 
     @Override
@@ -109,5 +110,4 @@ public class TipoPersonaJuridica implements Serializable {
     public String toString() {
         return "org.socialweb.model.TipoPersonaJuridica[ codigo=" + codigo + " ]";
     }
-    
 }

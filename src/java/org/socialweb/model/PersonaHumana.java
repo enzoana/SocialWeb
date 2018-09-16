@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.socialweb.model;
 
 import java.io.Serializable;
@@ -28,76 +23,109 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author enzo
  */
 @Entity
-@Table(name = "persona_humana", catalog = "socialweb", schema = "public")
+@Table(name = "persona_humana",
+        catalog = "socialweb",
+        schema = "public")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "PersonaHumana.findAll", query = "SELECT p FROM PersonaHumana p")
-    , @NamedQuery(name = "PersonaHumana.findByPersona", query = "SELECT p FROM PersonaHumana p WHERE p.persona = :persona")
-    , @NamedQuery(name = "PersonaHumana.findByDocumento", query = "SELECT p FROM PersonaHumana p WHERE p.documento = :documento")
-    , @NamedQuery(name = "PersonaHumana.findByNombre", query = "SELECT p FROM PersonaHumana p WHERE p.nombre = :nombre")
-    , @NamedQuery(name = "PersonaHumana.findByApellido", query = "SELECT p FROM PersonaHumana p WHERE p.apellido = :apellido")
-    , @NamedQuery(name = "PersonaHumana.findByUsrCreate", query = "SELECT p FROM PersonaHumana p WHERE p.usrCreate = :usrCreate")
-    , @NamedQuery(name = "PersonaHumana.findByTimeCreate", query = "SELECT p FROM PersonaHumana p WHERE p.timeCreate = :timeCreate")
-    , @NamedQuery(name = "PersonaHumana.findByUsrLastUpdate", query = "SELECT p FROM PersonaHumana p WHERE p.usrLastUpdate = :usrLastUpdate")
-    , @NamedQuery(name = "PersonaHumana.findByTimeLastUpdate", query = "SELECT p FROM PersonaHumana p WHERE p.timeLastUpdate = :timeLastUpdate")})
+    @NamedQuery(name = "PersonaHumana.findAll",
+            query = "SELECT p FROM PersonaHumana p"),
+    @NamedQuery(name = "PersonaHumana.findByPersona",
+                query = "SELECT p FROM PersonaHumana p WHERE p.persona = :persona")})
 public class PersonaHumana implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @Basic(optional = false)
     @NotNull
     @Column(nullable = false)
     private Integer persona;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(nullable = false, length = 2147483647)
-    private String documento;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(nullable = false, length = 2147483647)
-    private String nombre;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(nullable = false, length = 2147483647)
-    private String apellido;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(name = "usr_create", nullable = false, length = 2147483647)
-    private String usrCreate;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "time_create", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date timeCreate;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(name = "usr_last_update", nullable = false, length = 2147483647)
-    private String usrLastUpdate;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "time_last_update", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date timeLastUpdate;
-    @JoinColumn(name = "persona", referencedColumnName = "codigo", nullable = false, insertable = false, updatable = false)
+
+    @JoinColumn(name = "persona",
+            referencedColumnName = "codigo",
+            nullable = false,
+            insertable = false,
+            updatable = false)
     @OneToOne(optional = false)
-    private Persona persona1;
-    @JoinColumn(name = "tipo_documento", referencedColumnName = "codigo", nullable = false)
+    private Persona personaSuperClase;
+
+    @JoinColumn(name = "tipo_documento",
+            referencedColumnName = "codigo",
+            nullable = false)
     @ManyToOne(optional = false)
     private TipoDocumento tipoDocumento;
 
-    public PersonaHumana() {
-    }
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1,
+            max = 2147483647)
+    @Column(nullable = false,
+            length = 2147483647)
+    private String documento;
+
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1,
+            max = 2147483647)
+    @Column(nullable = false,
+            length = 2147483647)
+    private String nombre;
+
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1,
+            max = 2147483647)
+    @Column(nullable = false,
+            length = 2147483647)
+    private String apellido;
+
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1,
+            max = 2147483647)
+    @Column(name = "usr_create",
+            nullable = false,
+            length = 2147483647)
+    private String usrCreate;
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "time_create",
+            nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date timeCreate;
+
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1,
+            max = 2147483647)
+    @Column(name = "usr_last_update",
+            nullable = false,
+            length = 2147483647)
+    private String usrLastUpdate;
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "time_last_update",
+            nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date timeLastUpdate;
+
+    public PersonaHumana() {}
 
     public PersonaHumana(Integer persona) {
         this.persona = persona;
     }
 
-    public PersonaHumana(Integer persona, String documento, String nombre, String apellido, String usrCreate, Date timeCreate, String usrLastUpdate, Date timeLastUpdate) {
+    public PersonaHumana(Integer persona,
+            String documento,
+            String nombre,
+            String apellido,
+            String usrCreate,
+            Date timeCreate,
+            String usrLastUpdate,
+            Date timeLastUpdate) {
         this.persona = persona;
         this.documento = documento;
         this.nombre = nombre;
@@ -114,6 +142,22 @@ public class PersonaHumana implements Serializable {
 
     public void setPersona(Integer persona) {
         this.persona = persona;
+    }
+
+    public Persona getPersonaSuperClase() {
+        return personaSuperClase;
+    }
+
+    public void setPersonaSuperClase(Persona personaSuperClase) {
+        this.personaSuperClase = personaSuperClase;
+    }
+
+    public TipoDocumento getTipoDocumento() {
+        return tipoDocumento;
+    }
+
+    public void setTipoDocumento(TipoDocumento tipoDocumento) {
+        this.tipoDocumento = tipoDocumento;
     }
 
     public String getDocumento() {
@@ -172,22 +216,6 @@ public class PersonaHumana implements Serializable {
         this.timeLastUpdate = timeLastUpdate;
     }
 
-    public Persona getPersona1() {
-        return persona1;
-    }
-
-    public void setPersona1(Persona persona1) {
-        this.persona1 = persona1;
-    }
-
-    public TipoDocumento getTipoDocumento() {
-        return tipoDocumento;
-    }
-
-    public void setTipoDocumento(TipoDocumento tipoDocumento) {
-        this.tipoDocumento = tipoDocumento;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -212,5 +240,4 @@ public class PersonaHumana implements Serializable {
     public String toString() {
         return "org.socialweb.model.PersonaHumana[ persona=" + persona + " ]";
     }
-    
 }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.socialweb.model;
 
 import java.io.Serializable;
@@ -21,6 +16,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -35,76 +31,115 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author enzo
  */
 @Entity
-@Table(catalog = "socialweb", schema = "public", uniqueConstraints = {
+@Table(catalog = "socialweb",
+        schema = "public",
+        uniqueConstraints = {
     @UniqueConstraint(columnNames = {"cuit_cuil_cdi"})})
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Persona.findAll", query = "SELECT p FROM Persona p")
-    , @NamedQuery(name = "Persona.findByCodigo", query = "SELECT p FROM Persona p WHERE p.codigo = :codigo")
-    , @NamedQuery(name = "Persona.findByCuitCuilCdi", query = "SELECT p FROM Persona p WHERE p.cuitCuilCdi = :cuitCuilCdi")
-    , @NamedQuery(name = "Persona.findByUsrCreate", query = "SELECT p FROM Persona p WHERE p.usrCreate = :usrCreate")
-    , @NamedQuery(name = "Persona.findByTimeCreate", query = "SELECT p FROM Persona p WHERE p.timeCreate = :timeCreate")
-    , @NamedQuery(name = "Persona.findByUsrLastUpdate", query = "SELECT p FROM Persona p WHERE p.usrLastUpdate = :usrLastUpdate")
-    , @NamedQuery(name = "Persona.findByTimeLastUpdate", query = "SELECT p FROM Persona p WHERE p.timeLastUpdate = :timeLastUpdate")})
+    @NamedQuery(name = "Persona.findAll",
+            query = "SELECT p FROM Persona p"),
+    @NamedQuery(name = "Persona.findByCodigo",
+            query = "SELECT p FROM Persona p WHERE p.codigo = :codigo")})
 public class Persona implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "personaGenerator",
+            sequenceName = "seq_codigo_persona")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+            generator = "personaGenerator")
     @Basic(optional = false)
-    @Column(nullable = false)
+    @Column(name = "codigo",
+            nullable = false,
+            updatable = false)
     private Integer codigo;
+
     @Basic(optional = false)
     @NotNull
-    @Column(name = "cuit_cuil_cdi", nullable = false)
+    @Column(name = "cuit_cuil_cdi",
+            nullable = false)
     private Serializable cuitCuilCdi;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(name = "usr_create", nullable = false, length = 2147483647)
-    private String usrCreate;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "time_create", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date timeCreate;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(name = "usr_last_update", nullable = false, length = 2147483647)
-    private String usrLastUpdate;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "time_last_update", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date timeLastUpdate;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "persona")
-    private Set<Contacto> contactoSet;
-    @JoinColumn(name = "domicilio_fiscal", referencedColumnName = "codigo")
-    @ManyToOne
-    private Domicilio domicilioFiscal;
-    @JoinColumn(name = "domicilio_legal", referencedColumnName = "codigo")
-    @ManyToOne
-    private Domicilio domicilioLegal;
-    @JoinColumn(name = "domicilio_real", referencedColumnName = "codigo", nullable = false)
+
+    @JoinColumn(name = "domicilio_real",
+            referencedColumnName = "codigo",
+            nullable = false)
     @ManyToOne(optional = false)
     private Domicilio domicilioReal;
-    @JoinColumn(name = "estado", referencedColumnName = "codigo", nullable = false)
+
+    @JoinColumn(name = "domicilio_fiscal",
+            referencedColumnName = "codigo")
+    @ManyToOne
+    private Domicilio domicilioFiscal;
+
+    @JoinColumn(name = "domicilio_legal",
+            referencedColumnName = "codigo")
+    @ManyToOne
+    private Domicilio domicilioLegal;
+
+    @JoinColumn(name = "estado",
+            referencedColumnName = "codigo",
+            nullable = false)
     @ManyToOne(optional = false)
     private EstadoPersona estado;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "persona1")
+
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1,
+            max = 2147483647)
+    @Column(name = "usr_create",
+            nullable = false,
+            length = 2147483647)
+    private String usrCreate;
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "time_create",
+            nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date timeCreate;
+
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1,
+            max = 2147483647)
+    @Column(name = "usr_last_update",
+            nullable = false,
+            length = 2147483647)
+    private String usrLastUpdate;
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "time_last_update",
+            nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date timeLastUpdate;
+
+    @OneToMany(cascade = CascadeType.ALL,
+            mappedBy = "persona")
+    private Set<Contacto> contactos;
+
+    @OneToOne(cascade = CascadeType.ALL,
+            mappedBy = "persona1")
     private PersonaJuridica personaJuridica;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "persona1")
+
+    @OneToOne(cascade = CascadeType.ALL,
+            mappedBy = "persona1")
     private PersonaHumana personaHumana;
 
-    public Persona() {
-    }
+    public Persona() {}
 
     public Persona(Integer codigo) {
         this.codigo = codigo;
     }
 
-    public Persona(Integer codigo, Serializable cuitCuilCdi, String usrCreate, Date timeCreate, String usrLastUpdate, Date timeLastUpdate) {
+    public Persona(Integer codigo,
+            Serializable cuitCuilCdi,
+            String usrCreate,
+            Date timeCreate,
+            String usrLastUpdate,
+            Date timeLastUpdate) {
         this.codigo = codigo;
         this.cuitCuilCdi = cuitCuilCdi;
         this.usrCreate = usrCreate;
@@ -127,6 +162,38 @@ public class Persona implements Serializable {
 
     public void setCuitCuilCdi(Serializable cuitCuilCdi) {
         this.cuitCuilCdi = cuitCuilCdi;
+    }
+
+    public Domicilio getDomicilioReal() {
+        return domicilioReal;
+    }
+
+    public void setDomicilioReal(Domicilio domicilioReal) {
+        this.domicilioReal = domicilioReal;
+    }
+
+    public Domicilio getDomicilioFiscal() {
+        return domicilioFiscal;
+    }
+
+    public void setDomicilioFiscal(Domicilio domicilioFiscal) {
+        this.domicilioFiscal = domicilioFiscal;
+    }
+
+    public Domicilio getDomicilioLegal() {
+        return domicilioLegal;
+    }
+
+    public void setDomicilioLegal(Domicilio domicilioLegal) {
+        this.domicilioLegal = domicilioLegal;
+    }
+
+    public EstadoPersona getEstado() {
+        return estado;
+    }
+
+    public void setEstado(EstadoPersona estado) {
+        this.estado = estado;
     }
 
     public String getUsrCreate() {
@@ -162,44 +229,12 @@ public class Persona implements Serializable {
     }
 
     @XmlTransient
-    public Set<Contacto> getContactoSet() {
-        return contactoSet;
+    public Set<Contacto> getContactos() {
+        return contactos;
     }
 
-    public void setContactoSet(Set<Contacto> contactoSet) {
-        this.contactoSet = contactoSet;
-    }
-
-    public Domicilio getDomicilioFiscal() {
-        return domicilioFiscal;
-    }
-
-    public void setDomicilioFiscal(Domicilio domicilioFiscal) {
-        this.domicilioFiscal = domicilioFiscal;
-    }
-
-    public Domicilio getDomicilioLegal() {
-        return domicilioLegal;
-    }
-
-    public void setDomicilioLegal(Domicilio domicilioLegal) {
-        this.domicilioLegal = domicilioLegal;
-    }
-
-    public Domicilio getDomicilioReal() {
-        return domicilioReal;
-    }
-
-    public void setDomicilioReal(Domicilio domicilioReal) {
-        this.domicilioReal = domicilioReal;
-    }
-
-    public EstadoPersona getEstado() {
-        return estado;
-    }
-
-    public void setEstado(EstadoPersona estado) {
-        this.estado = estado;
+    public void setContactos(Set<Contacto> contactos) {
+        this.contactos = contactos;
     }
 
     public PersonaJuridica getPersonaJuridica() {
@@ -242,5 +277,4 @@ public class Persona implements Serializable {
     public String toString() {
         return "org.socialweb.model.Persona[ codigo=" + codigo + " ]";
     }
-    
 }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.socialweb.model;
 
 import java.io.Serializable;
@@ -28,59 +23,82 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author enzo
  */
 @Entity
-@Table(name = "persona_juridica", catalog = "socialweb", schema = "public")
+@Table(name = "persona_juridica",
+        catalog = "socialweb",
+        schema = "public")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "PersonaJuridica.findAll", query = "SELECT p FROM PersonaJuridica p")
-    , @NamedQuery(name = "PersonaJuridica.findByPersona", query = "SELECT p FROM PersonaJuridica p WHERE p.persona = :persona")
-    , @NamedQuery(name = "PersonaJuridica.findByRazonSocial", query = "SELECT p FROM PersonaJuridica p WHERE p.razonSocial = :razonSocial")
-    , @NamedQuery(name = "PersonaJuridica.findByNombreComercial", query = "SELECT p FROM PersonaJuridica p WHERE p.nombreComercial = :nombreComercial")
-    , @NamedQuery(name = "PersonaJuridica.findByUsrCreate", query = "SELECT p FROM PersonaJuridica p WHERE p.usrCreate = :usrCreate")
-    , @NamedQuery(name = "PersonaJuridica.findByTimeCreate", query = "SELECT p FROM PersonaJuridica p WHERE p.timeCreate = :timeCreate")
-    , @NamedQuery(name = "PersonaJuridica.findByUsrLastUpdate", query = "SELECT p FROM PersonaJuridica p WHERE p.usrLastUpdate = :usrLastUpdate")
-    , @NamedQuery(name = "PersonaJuridica.findByTimeLastUpdate", query = "SELECT p FROM PersonaJuridica p WHERE p.timeLastUpdate = :timeLastUpdate")})
+    @NamedQuery(name = "PersonaJuridica.findAll",
+            query = "SELECT p FROM PersonaJuridica p"),
+    @NamedQuery(name = "PersonaJuridica.findByPersona",
+            query = "SELECT p FROM PersonaJuridica p WHERE p.persona = :persona")})
 public class PersonaJuridica implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @Basic(optional = false)
     @NotNull
     @Column(nullable = false)
     private Integer persona;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(name = "razon_social", nullable = false, length = 2147483647)
-    private String razonSocial;
-    @Size(max = 2147483647)
-    @Column(name = "nombre_comercial", length = 2147483647)
-    private String nombreComercial;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(name = "usr_create", nullable = false, length = 2147483647)
-    private String usrCreate;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "time_create", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date timeCreate;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(name = "usr_last_update", nullable = false, length = 2147483647)
-    private String usrLastUpdate;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "time_last_update", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date timeLastUpdate;
-    @JoinColumn(name = "persona", referencedColumnName = "codigo", nullable = false, insertable = false, updatable = false)
+
+    @JoinColumn(name = "persona",
+            referencedColumnName = "codigo",
+            nullable = false,
+            insertable = false,
+            updatable = false)
     @OneToOne(optional = false)
-    private Persona persona1;
-    @JoinColumn(name = "tipo_persona_juridica", referencedColumnName = "codigo", nullable = false)
+    private Persona personaSuperClase;
+
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1,
+            max = 2147483647)
+    @Column(name = "razon_social",
+            nullable = false,
+            length = 2147483647)
+    private String razonSocial;
+
+    @Size(max = 2147483647)
+    @Column(name = "nombre_comercial",
+            length = 2147483647)
+    private String nombreComercial;
+
+    @JoinColumn(name = "tipo_persona_juridica",
+            referencedColumnName = "codigo",
+            nullable = false)
     @ManyToOne(optional = false)
     private TipoPersonaJuridica tipoPersonaJuridica;
+
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 2147483647)
+    @Column(name = "usr_create",
+            nullable = false,
+            length = 2147483647)
+    private String usrCreate;
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "time_create",
+            nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date timeCreate;
+
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 2147483647)
+    @Column(name = "usr_last_update",
+            nullable = false,
+            length = 2147483647)
+    private String usrLastUpdate;
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "time_last_update",
+            nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date timeLastUpdate;
 
     public PersonaJuridica() {
     }
@@ -89,7 +107,12 @@ public class PersonaJuridica implements Serializable {
         this.persona = persona;
     }
 
-    public PersonaJuridica(Integer persona, String razonSocial, String usrCreate, Date timeCreate, String usrLastUpdate, Date timeLastUpdate) {
+    public PersonaJuridica(Integer persona,
+            String razonSocial,
+            String usrCreate,
+            Date timeCreate,
+            String usrLastUpdate,
+            Date timeLastUpdate) {
         this.persona = persona;
         this.razonSocial = razonSocial;
         this.usrCreate = usrCreate;
@@ -106,6 +129,14 @@ public class PersonaJuridica implements Serializable {
         this.persona = persona;
     }
 
+    public Persona getPersonaSuperClase() {
+        return personaSuperClase;
+    }
+
+    public void setPersonaSuperClase(Persona personaSuperClase) {
+        this.personaSuperClase = personaSuperClase;
+    }
+
     public String getRazonSocial() {
         return razonSocial;
     }
@@ -120,6 +151,14 @@ public class PersonaJuridica implements Serializable {
 
     public void setNombreComercial(String nombreComercial) {
         this.nombreComercial = nombreComercial;
+    }
+
+    public TipoPersonaJuridica getTipoPersonaJuridica() {
+        return tipoPersonaJuridica;
+    }
+
+    public void setTipoPersonaJuridica(TipoPersonaJuridica tipoPersonaJuridica) {
+        this.tipoPersonaJuridica = tipoPersonaJuridica;
     }
 
     public String getUsrCreate() {
@@ -154,22 +193,6 @@ public class PersonaJuridica implements Serializable {
         this.timeLastUpdate = timeLastUpdate;
     }
 
-    public Persona getPersona1() {
-        return persona1;
-    }
-
-    public void setPersona1(Persona persona1) {
-        this.persona1 = persona1;
-    }
-
-    public TipoPersonaJuridica getTipoPersonaJuridica() {
-        return tipoPersonaJuridica;
-    }
-
-    public void setTipoPersonaJuridica(TipoPersonaJuridica tipoPersonaJuridica) {
-        this.tipoPersonaJuridica = tipoPersonaJuridica;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -194,5 +217,4 @@ public class PersonaJuridica implements Serializable {
     public String toString() {
         return "org.socialweb.model.PersonaJuridica[ persona=" + persona + " ]";
     }
-    
 }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.socialweb.model;
 
 import java.io.Serializable;
@@ -26,36 +21,46 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author enzo
  */
 @Entity
-@Table(name = "estado_pais", catalog = "socialweb", schema = "public")
+@Table(name = "estado_pais",
+        catalog = "socialweb",
+        schema = "public")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "EstadoPais.findAll", query = "SELECT e FROM EstadoPais e")
-    , @NamedQuery(name = "EstadoPais.findByCodigo", query = "SELECT e FROM EstadoPais e WHERE e.codigo = :codigo")
-    , @NamedQuery(name = "EstadoPais.findByDescripcion", query = "SELECT e FROM EstadoPais e WHERE e.descripcion = :descripcion")})
+    @NamedQuery(name = "EstadoPais.findAll",
+            query = "SELECT e FROM EstadoPais e"),
+    @NamedQuery(name = "EstadoPais.findByCodigo",
+            query = "SELECT e FROM EstadoPais e WHERE e.codigo = :codigo")})
 public class EstadoPais implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @Basic(optional = false)
-    @NotNull
-    @Column(nullable = false)
+    @Column(name = "codigo",
+            nullable = false,
+            updatable = false)
     private Integer codigo;
+
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(nullable = false, length = 2147483647)
+    @Size(min = 1,
+            max = 2147483647)
+    @Column(nullable = false,
+            length = 2147483647)
     private String descripcion;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "estado")
-    private Set<Pais> paisSet;
 
-    public EstadoPais() {
-    }
+    @OneToMany(cascade = CascadeType.ALL,
+            mappedBy = "estado")
+    private Set<Pais> paises;
+
+    public EstadoPais() {}
 
     public EstadoPais(Integer codigo) {
         this.codigo = codigo;
     }
 
-    public EstadoPais(Integer codigo, String descripcion) {
+    public EstadoPais(Integer codigo,
+            String descripcion) {
         this.codigo = codigo;
         this.descripcion = descripcion;
     }
@@ -77,12 +82,12 @@ public class EstadoPais implements Serializable {
     }
 
     @XmlTransient
-    public Set<Pais> getPaisSet() {
-        return paisSet;
+    public Set<Pais> getPaises() {
+        return paises;
     }
 
-    public void setPaisSet(Set<Pais> paisSet) {
-        this.paisSet = paisSet;
+    public void setPaises(Set<Pais> paises) {
+        this.paises = paises;
     }
 
     @Override
@@ -109,5 +114,4 @@ public class EstadoPais implements Serializable {
     public String toString() {
         return "org.socialweb.model.EstadoPais[ codigo=" + codigo + " ]";
     }
-    
 }

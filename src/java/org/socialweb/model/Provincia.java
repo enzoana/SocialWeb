@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.socialweb.model;
 
 import java.io.Serializable;
@@ -12,6 +7,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -33,72 +30,108 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author enzo
  */
 @Entity
-@Table(catalog = "socialweb", schema = "public")
+@Table(catalog = "socialweb",
+        schema = "public")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Provincia.findAll", query = "SELECT p FROM Provincia p")
-    , @NamedQuery(name = "Provincia.findByCodigo", query = "SELECT p FROM Provincia p WHERE p.codigo = :codigo")
-    , @NamedQuery(name = "Provincia.findByNombre", query = "SELECT p FROM Provincia p WHERE p.nombre = :nombre")
-    , @NamedQuery(name = "Provincia.findByCodigoIso", query = "SELECT p FROM Provincia p WHERE p.codigoIso = :codigoIso")
-    , @NamedQuery(name = "Provincia.findByUsrCreate", query = "SELECT p FROM Provincia p WHERE p.usrCreate = :usrCreate")
-    , @NamedQuery(name = "Provincia.findByTimeCreate", query = "SELECT p FROM Provincia p WHERE p.timeCreate = :timeCreate")
-    , @NamedQuery(name = "Provincia.findByUsrLastUpdate", query = "SELECT p FROM Provincia p WHERE p.usrLastUpdate = :usrLastUpdate")
-    , @NamedQuery(name = "Provincia.findByTimeLastUpdate", query = "SELECT p FROM Provincia p WHERE p.timeLastUpdate = :timeLastUpdate")})
+    @NamedQuery(name = "Provincia.findAll",
+            query = "SELECT p FROM Provincia p"),
+    @NamedQuery(name = "Provincia.findByCodigo",
+            query = "SELECT p FROM Provincia p WHERE p.codigo = :codigo")})
 public class Provincia implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "provinciaGenerator",
+            sequenceName = "seq_codigo_provincia")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+            generator = "provinciaGenerator")
     @Basic(optional = false)
-    @Column(nullable = false)
+    @Column(name = "codigo",
+            nullable = false,
+            updatable = false)
     private Integer codigo;
+
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(nullable = false, length = 2147483647)
+    @Size(min = 1,
+            max = 2147483647)
+    @Column(nullable = false,
+            length = 2147483647)
     private String nombre;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(name = "codigo_iso", nullable = false, length = 2147483647)
-    private String codigoIso;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(name = "usr_create", nullable = false, length = 2147483647)
-    private String usrCreate;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "time_create", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date timeCreate;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(name = "usr_last_update", nullable = false, length = 2147483647)
-    private String usrLastUpdate;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "time_last_update", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date timeLastUpdate;
-    @JoinColumn(name = "estado", referencedColumnName = "codigo", nullable = false)
+
+    @JoinColumn(name = "estado",
+            referencedColumnName = "codigo",
+            nullable = false)
     @ManyToOne(optional = false)
     private EstadoProvincia estado;
-    @JoinColumn(name = "pais", referencedColumnName = "codigo", nullable = false)
+
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1,
+            max = 2147483647)
+    @Column(name = "codigo_iso",
+            nullable = false,
+            length = 2147483647)
+    private String codigoIso;
+
+    @JoinColumn(name = "pais",
+            referencedColumnName = "codigo",
+            nullable = false)
     @ManyToOne(optional = false)
     private Pais pais;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "provincia")
-    private Set<Ciudad> ciudadSet;
 
-    public Provincia() {
-    }
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1,
+            max = 2147483647)
+    @Column(name = "usr_create",
+            nullable = false,
+            length = 2147483647)
+    private String usrCreate;
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "time_create",
+            nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date timeCreate;
+
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1,
+            max = 2147483647)
+    @Column(name = "usr_last_update",
+            nullable = false,
+            length = 2147483647)
+    private String usrLastUpdate;
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "time_last_update",
+            nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date timeLastUpdate;
+
+    @OneToMany(fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            mappedBy = "provincia")
+    private Set<Ciudad> ciudades;
+
+    public Provincia() {}
 
     public Provincia(Integer codigo) {
         this.codigo = codigo;
     }
 
-    public Provincia(Integer codigo, String nombre, String codigoIso, String usrCreate, Date timeCreate, String usrLastUpdate, Date timeLastUpdate) {
+    public Provincia(Integer codigo,
+            String nombre,
+            String codigoIso,
+            String usrCreate,
+            Date timeCreate,
+            String usrLastUpdate,
+            Date timeLastUpdate) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.codigoIso = codigoIso;
@@ -124,12 +157,28 @@ public class Provincia implements Serializable {
         this.nombre = nombre;
     }
 
+    public EstadoProvincia getEstado() {
+        return estado;
+    }
+
+    public void setEstado(EstadoProvincia estado) {
+        this.estado = estado;
+    }
+
     public String getCodigoIso() {
         return codigoIso;
     }
 
     public void setCodigoIso(String codigoIso) {
         this.codigoIso = codigoIso;
+    }
+
+    public Pais getPais() {
+        return pais;
+    }
+
+    public void setPais(Pais pais) {
+        this.pais = pais;
     }
 
     public String getUsrCreate() {
@@ -164,29 +213,13 @@ public class Provincia implements Serializable {
         this.timeLastUpdate = timeLastUpdate;
     }
 
-    public EstadoProvincia getEstado() {
-        return estado;
-    }
-
-    public void setEstado(EstadoProvincia estado) {
-        this.estado = estado;
-    }
-
-    public Pais getPais() {
-        return pais;
-    }
-
-    public void setPais(Pais pais) {
-        this.pais = pais;
-    }
-
     @XmlTransient
-    public Set<Ciudad> getCiudadSet() {
-        return ciudadSet;
+    public Set<Ciudad> getCiudades() {
+        return ciudades;
     }
 
-    public void setCiudadSet(Set<Ciudad> ciudadSet) {
-        this.ciudadSet = ciudadSet;
+    public void setCiudades(Set<Ciudad> ciudades) {
+        this.ciudades = ciudades;
     }
 
     @Override
@@ -213,5 +246,4 @@ public class Provincia implements Serializable {
     public String toString() {
         return "org.socialweb.model.Provincia[ codigo=" + codigo + " ]";
     }
-    
 }
