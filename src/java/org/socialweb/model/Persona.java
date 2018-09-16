@@ -121,11 +121,11 @@ public class Persona implements Serializable {
     private Set<Contacto> contactos;
 
     @OneToOne(cascade = CascadeType.ALL,
-            mappedBy = "persona1")
+            mappedBy = "personaSuperClase")
     private PersonaJuridica personaJuridica;
 
     @OneToOne(cascade = CascadeType.ALL,
-            mappedBy = "persona1")
+            mappedBy = "personaSuperClase")
     private PersonaHumana personaHumana;
 
     public Persona() {}
