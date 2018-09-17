@@ -63,14 +63,22 @@ public class Ciudad implements Serializable {
 
     @JoinColumn(name = "estado",
             referencedColumnName = "codigo",
-            nullable = false)
-    @ManyToOne(optional = false)
+            nullable = false,
+            insertable = false,
+            updatable = false)
+    @ManyToOne(fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            optional = false)
     private EstadoCiudad estado;
 
     @JoinColumn(name = "provincia",
             referencedColumnName = "codigo",
-            nullable = false)
-    @ManyToOne(optional = false)
+            nullable = false,
+            insertable = false,
+            updatable = false)
+    @ManyToOne(fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            optional = false)
     private Provincia provincia;
 
     @Basic(optional = false)
