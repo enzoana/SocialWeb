@@ -1,5 +1,6 @@
 package org.socialweb.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
@@ -64,7 +65,8 @@ public class Provincia implements Serializable {
     @JoinColumn(name = "estado",
             referencedColumnName = "codigo",
             nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(cascade = CascadeType.ALL,
+            optional = false)
     private EstadoProvincia estado;
 
     @Basic(optional = false)
@@ -79,7 +81,8 @@ public class Provincia implements Serializable {
     @JoinColumn(name = "pais",
             referencedColumnName = "codigo",
             nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(cascade = CascadeType.ALL,
+            optional = false)
     private Pais pais;
 
     @Basic(optional = false)
@@ -117,6 +120,7 @@ public class Provincia implements Serializable {
     @OneToMany(fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
             mappedBy = "provincia")
+    @JsonIgnore
     private Set<Ciudad> ciudades;
 
     public Provincia() {}

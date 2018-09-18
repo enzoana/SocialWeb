@@ -1,5 +1,6 @@
 package org.socialweb.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
@@ -53,6 +54,7 @@ public class EstadoProvincia implements Serializable {
     @OneToMany(fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
             mappedBy = "estado")
+    @JsonIgnore
     private Set<Provincia> provincias;
 
     public EstadoProvincia() {}

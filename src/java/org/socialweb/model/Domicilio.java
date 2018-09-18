@@ -1,5 +1,6 @@
 package org.socialweb.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
@@ -7,6 +8,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -70,7 +72,8 @@ public class Domicilio implements Serializable {
     @JoinColumn(name = "ciudad",
             referencedColumnName = "codigo",
             nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(cascade = CascadeType.ALL,
+            optional = false)
     private Ciudad ciudad;
 
     @Basic(optional = false)
@@ -105,16 +108,22 @@ public class Domicilio implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date timeLastUpdate;
 
-    @OneToMany(cascade = CascadeType.ALL,
+    @OneToMany(fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
             mappedBy = "domicilioReal")
+    @JsonIgnore
     private Set<Persona> domiciliosRealesPersonas;
 
-    @OneToMany(cascade = CascadeType.ALL,
+    @OneToMany(fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
             mappedBy = "domicilioFiscal")
+    @JsonIgnore
     private Set<Persona> domiciliosFiscalesPersonas;
 
-    @OneToMany(cascade = CascadeType.ALL,
+    @OneToMany(fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
             mappedBy = "domicilioLegal")
+    @JsonIgnore
     private Set<Persona> domiciliosLegalesPersonas;
 
     public Domicilio() {}

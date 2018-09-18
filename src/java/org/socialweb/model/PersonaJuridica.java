@@ -3,6 +3,7 @@ package org.socialweb.model;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -67,7 +68,8 @@ public class PersonaJuridica implements Serializable {
     @JoinColumn(name = "tipo_persona_juridica",
             referencedColumnName = "codigo",
             nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(cascade = CascadeType.ALL,
+            optional = false)
     private TipoPersonaJuridica tipoPersonaJuridica;
 
     @Basic(optional = false)

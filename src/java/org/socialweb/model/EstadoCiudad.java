@@ -1,5 +1,6 @@
 package org.socialweb.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
@@ -16,8 +17,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import org.hibernate.FetchMode;
-import org.hibernate.annotations.Fetch;
 
 /**
  *
@@ -55,7 +54,7 @@ public class EstadoCiudad implements Serializable {
     @OneToMany(fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
             mappedBy = "estado")
-    @Fetch(org.hibernate.annotations.FetchMode.SUBSELECT)
+    @JsonIgnore
     private Set<Ciudad> ciudades;
 
     public EstadoCiudad() {}

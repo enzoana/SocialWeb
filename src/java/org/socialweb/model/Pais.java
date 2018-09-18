@@ -1,5 +1,6 @@
 package org.socialweb.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
@@ -7,6 +8,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -96,7 +98,8 @@ public class Pais implements Serializable {
     @JoinColumn(name = "estado",
             referencedColumnName = "codigo",
             nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(cascade = CascadeType.ALL,
+            optional = false)
     private EstadoPais estado;
 
     @Basic(optional = false)
@@ -131,8 +134,10 @@ public class Pais implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date timeLastUpdate;
 
-    @OneToMany(cascade = CascadeType.ALL,
+    @OneToMany(fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
             mappedBy = "pais")
+    @JsonIgnore
     private Set<Provincia> provincias;
 
     public Pais() {}

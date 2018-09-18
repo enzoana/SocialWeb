@@ -1,11 +1,13 @@
 package org.socialweb.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -48,8 +50,10 @@ public class TipoContacto implements Serializable {
             length = 2147483647)
     private String descripcion;
 
-    @OneToMany(cascade = CascadeType.ALL,
+    @OneToMany(fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
             mappedBy = "tipoContacto")
+    @JsonIgnore
     private Set<Contacto> contactos;
 
     public TipoContacto() {}

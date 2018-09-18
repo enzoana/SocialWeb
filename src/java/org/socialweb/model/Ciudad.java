@@ -1,5 +1,9 @@
 package org.socialweb.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
@@ -66,8 +70,7 @@ public class Ciudad implements Serializable {
             nullable = false,
             insertable = false,
             updatable = false)
-    @ManyToOne(fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL,
+    @ManyToOne(cascade = CascadeType.ALL,
             optional = false)
     private EstadoCiudad estado;
 
@@ -76,8 +79,7 @@ public class Ciudad implements Serializable {
             nullable = false,
             insertable = false,
             updatable = false)
-    @ManyToOne(fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL,
+    @ManyToOne(cascade = CascadeType.ALL,
             optional = false)
     private Provincia provincia;
 
@@ -115,6 +117,7 @@ public class Ciudad implements Serializable {
     @OneToMany(fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
             mappedBy = "ciudad")
+    @JsonIgnore
     private Set<Domicilio> domicilios;
 
     public Ciudad() {}

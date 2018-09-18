@@ -1,5 +1,6 @@
 package org.socialweb.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
@@ -7,6 +8,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -65,23 +67,27 @@ public class Persona implements Serializable {
     @JoinColumn(name = "domicilio_real",
             referencedColumnName = "codigo",
             nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(cascade = CascadeType.ALL,
+            optional = false)
     private Domicilio domicilioReal;
 
     @JoinColumn(name = "domicilio_fiscal",
             referencedColumnName = "codigo")
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL,
+            optional = false)
     private Domicilio domicilioFiscal;
 
     @JoinColumn(name = "domicilio_legal",
             referencedColumnName = "codigo")
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL,
+            optional = false)
     private Domicilio domicilioLegal;
 
     @JoinColumn(name = "estado",
             referencedColumnName = "codigo",
             nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(cascade = CascadeType.ALL,
+            optional = false)
     private EstadoPersona estado;
 
     @Basic(optional = false)
@@ -116,8 +122,10 @@ public class Persona implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date timeLastUpdate;
 
-    @OneToMany(cascade = CascadeType.ALL,
+    @OneToMany(fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
             mappedBy = "persona")
+    @JsonIgnore
     private Set<Contacto> contactos;
 
     @OneToOne(cascade = CascadeType.ALL,
