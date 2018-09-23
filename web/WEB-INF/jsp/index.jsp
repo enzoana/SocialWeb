@@ -28,19 +28,23 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="empresas" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Empresas</a>
+              <div class="dropdown-menu" aria-labelledby="empresas">
+                <a class="dropdown-item" href="#">Empresa 01</a>
+                <a class="dropdown-item" href="#">Empresa 02</a>
+                <a class="dropdown-item" href="#">Empresa 03</a>
+              </div>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
+              <a class="nav-link" href="#">Servicios</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link disabled" href="#">Disabled</a>
+              <a class="nav-link" href="#">Productos</a>
             </li>
           </ul>
-          <form class="form-inline mt-2 mt-md-0">
-            <input class="form-control mr-sm-2" type="text" placeholder="Buscar" aria-label="Buscar">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+          <form class="form-inline mt-2 mt-md-0" action="login.do" method="get">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><img src="${pageContext.request.contextPath}/img/logIn.png" alt="X"/></button>
           </form>
         </div>
       </nav>
@@ -56,7 +60,7 @@
         </ol>
         <div class="carousel-inner">
           <div class="carousel-item active">
-            <img class="first-slide" src="${pageContext.request.contextPath}/img/carousel01.jpeg" alt="X">
+            <img class="first-slide" src="https://drive.google.com/uc?id=1L8kKfiVdNUk2dBMEik0L0gt1BvYfsNya" alt="X">
             <div class="container">
               <div class="carousel-caption text-left">
                 <h1>T&iacute;tulo de art&iacute;culo</h1>
@@ -66,7 +70,7 @@
             </div>
           </div>
           <div class="carousel-item">
-            <img class="second-slide" src="${pageContext.request.contextPath}/img/carousel02.jpeg" alt="X">
+            <img class="second-slide" src="https://drive.google.com/uc?id=1q4RJUeMrK4Wx2EwKV6-mrE3dl3TUrrhH" alt="X">
             <div class="container">
               <div class="carousel-caption">
                 <h1>T&iacute;tulo de art&iacute;culo</h1>
@@ -76,7 +80,7 @@
             </div>
           </div>
           <div class="carousel-item">
-            <img class="third-slide" src="${pageContext.request.contextPath}/img/carousel03.jpeg" alt="X">
+            <img class="third-slide" src="https://drive.google.com/uc?id=1H6gszlxt01Fe0VVMbxHWHiZ1Ieet2URq" alt="X">
             <div class="container">
               <div class="carousel-caption text-right">
                 <h1>T&iacute;tulo de art&iacute;culo</h1>
@@ -88,85 +92,105 @@
         </div>
         <a class="carousel-control-prev" href="#SocialWebCarousel" role="button" data-slide="prev">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="sr-only">Previous</span>
+          <span class="sr-only">Anterior</span>
         </a>
         <a class="carousel-control-next" href="#SocialWebCarousel" role="button" data-slide="next">
           <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="sr-only">Next</span>
+          <span class="sr-only">Siguiente</span>
         </a>
       </div>
 
       <div class="container marketing">
 
-        <hr class="featurette-divider">
+        <div class="row">
+          <div class="col-lg-12">
+            <hr class="featurette-divider">
+          </div>
+        </div>
 
         <div class="row">
           <div class="col-lg-4">
-            <img class="rounded-left rounded-right" src="${pageContext.request.contextPath}/img/featurette01.jpeg" alt="X" width="140" height="140">
+            <img class="rounded-left rounded-right" src="https://drive.google.com/uc?id=13ZXkpMfx5rgR-C4RcP_yqVw-JSsQ8B8c" alt="X" width="140" height="140">
             <h2>T&iacute;tulo de art&iacute;culo</h2>
             <p>Resumen del contenido del art&iacute;culo. Aqu&iacute; se deber&iacute;a colocar un <b>resumen del art&iacute;culo</b> que no lleve mas de <b>trescientos caracteres</b>. Con el objetivo de hacer una introducci&oacute;n al mismo y lograr un buen estructurado del contenido del sitio Web.</p>
             <p><a class="btn btn-secondary" href="#" role="button">Ver detalles &raquo;</a></p>
           </div>
           <div class="col-lg-4">
-            <img class="rounded-circle" src="${pageContext.request.contextPath}/img/featurette02.jpeg" alt="X" width="140" height="140">
+            <img class="rounded-circle" src="https://drive.google.com/uc?id=1GQyZSAvLd3n58GjG4f60urNyOMF4zRrH" alt="X" width="140" height="140">
             <h2>T&iacute;tulo de art&iacute;culo</h2>
             <p>Resumen del contenido del art&iacute;culo. Aqu&iacute; se deber&iacute;a colocar un <b>resumen del art&iacute;culo</b> que no lleve mas de <b>trescientos caracteres</b>. Con el objetivo de hacer una introducci&oacute;n al mismo y lograr un buen estructurado del contenido del sitio Web.</p>
             <p><a class="btn btn-secondary" href="#" role="button">Ver detalles &raquo;</a></p>
           </div>
           <div class="col-lg-4">
-            <img class="rounded-left rounded-right" src="${pageContext.request.contextPath}/img/featurette03.jpeg" alt="X" width="140" height="140">
+            <img class="rounded-left rounded-right" src="https://drive.google.com/uc?id=1iRYHQ4vkdC5yIoEoh3ZPy8i7b5pf5gNX" alt="X" width="140" height="140">
             <h2>T&iacute;tulo de art&iacute;culo</h2>
             <p>Resumen del contenido del art&iacute;culo. Aqu&iacute; se deber&iacute;a colocar un <b>resumen del art&iacute;culo</b> que no lleve mas de <b>trescientos caracteres</b>. Con el objetivo de hacer una introducci&oacute;n al mismo y lograr un buen estructurado del contenido del sitio Web.</p>
             <p><a class="btn btn-secondary" href="#" role="button">Ver detalles &raquo;</a></p>
           </div>
-        </div><
+        </div>
 
-        <hr class="featurette-divider">
+        <div class="row">
+          <div class="col-lg-12">
+            <hr class="featurette-divider">
+          </div>
+        </div>
 
         <div class="row featurette">
           <div class="col-md-7">
             <h2 class="featurette-heading">T&iacute;tulo de art&iacute;culo. <span class="text-muted">Subt&iacute;tulo.</span></h2>
-            <p class="lead">Detalle del contenido del art&iacute;culo. Aqu&iacute; se deber&iacute;a colocar <b>el art&iacute;culo</b>, siendo el mismo de no mas de <b>cinco mil</b>. Con el objetivo de desarrollar el un tema brevemente y lograr un buen estructurado del contenido del sitio Web.</p>
+            <p class="lead">Detalle del contenido del art&iacute;culo. Aqu&iacute; se deber&iacute;a colocar <b>el art&iacute;culo</b>, siendo el mismo de no mas de <b>cinco mil caracteres</b>. Con el objetivo de desarrollar el un tema brevemente y lograr un buen estructurado del contenido del sitio Web.</p>
           </div>
           <div class="col-md-5">
             <iframe width="500" height="500" src="https://www.youtube.com/embed/GOUXDZM1oeg" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
           </div>
         </div>
 
-        <hr class="featurette-divider">
+        <div class="row">
+          <div class="col-lg-12">
+            <hr class="featurette-divider">
+          </div>
+        </div>
 
         <div class="row featurette">
           <div class="col-md-7 order-md-2">
             <h2 class="featurette-heading">T&iacute;tulo de art&iacute;culo. <span class="text-muted">Subt&iacute;tulo.</span></h2>
-            <p class="lead">Detalle del contenido del art&iacute;culo. Aqu&iacute; se deber&iacute;a colocar <b>el art&iacute;culo</b>, siendo el mismo de no mas de <b>cinco mil</b>. Con el objetivo de desarrollar el un tema brevemente y lograr un buen estructurado del contenido del sitio Web.</p>
+            <p class="lead">Detalle del contenido del art&iacute;culo. Aqu&iacute; se deber&iacute;a colocar <b>el art&iacute;culo</b>, siendo el mismo de no mas de <b>cinco mil caracteres</b>. Con el objetivo de desarrollar el un tema brevemente y lograr un buen estructurado del contenido del sitio Web.</p>
           </div>
           <div class="col-md-5 order-md-1">
-            <img class="featurette-image img-fluid mx-auto" src="${pageContext.request.contextPath}/img/sw.png" alt="X">
+            <img class="featurette-image img-fluid mx-auto" src="https://drive.google.com/uc?id=1KrzAIAkh5sHqglmKDlfWuJ7p3yY5wuoe" alt="X">
           </div>
         </div>
 
-        <hr class="featurette-divider">
+        <div class="row">
+          <div class="col-lg-12">
+            <hr class="featurette-divider">
+          </div>
+        </div>
 
         <div class="row featurette">
           <div class="col-md-7">
             <h2 class="featurette-heading">T&iacute;tulo de art&iacute;culo. <span class="text-muted">Subt&iacute;tulo.</span></h2>
-            <p class="lead">Detalle del contenido del art&iacute;culo. Aqu&iacute; se deber&iacute;a colocar <b>el art&iacute;culo</b>, siendo el mismo de no mas de <b>cinco mil</b>. Con el objetivo de desarrollar el un tema brevemente y lograr un buen estructurado del contenido del sitio Web.</p>
+            <p class="lead">Detalle del contenido del art&iacute;culo. Aqu&iacute; se deber&iacute;a colocar <b>el art&iacute;culo</b>, siendo el mismo de no mas de <b>cinco mil caracteres</b>. Con el objetivo de desarrollar el un tema brevemente y lograr un buen estructurado del contenido del sitio Web.</p>
           </div>
           <div class="col-md-5">
             <iframe width="500" height="500" src="https://www.youtube.com/embed/qR48DCXYFRI" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
           </div>
         </div>
 
-        <hr class="featurette-divider">
+        <div class="row">
+          <div class="col-lg-12">
+            <hr class="featurette-divider">
+          </div>
+        </div>
 
       </div>
 
-      <footer class="container">
-        <p class="float-right"><a href="#">Ir al comienzo</a></p>
-        <p>&copy; 2017-2018 SocialWeb &middot; <a href="#">Privacidad</a> &middot; <a href="#">T&eacute;rminos de uso</a></p>
-      </footer>
-
     </main>
+
+    <footer class="container">
+      <p class="float-right"><a href="#">Ir al comienzo</a></p>
+      <p>&copy; 2017-2018 SocialWeb &middot; <a href="#">Privacidad</a> &middot; <a href="#">T&eacute;rminos de uso</a></p>
+    </footer>
 
   </body>
 </html>

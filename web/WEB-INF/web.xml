@@ -61,6 +61,7 @@
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.do</url-pattern>
         <url-pattern>*.htm</url-pattern>
+        <url-pattern>*.html</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
