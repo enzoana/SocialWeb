@@ -73,9 +73,9 @@
             <form class="form-signin" action="login.do" method="post">
               <h1 class="h3 mb-3 font-weight-normal">Por favor autentif&iacute;quese:</h1>
               <label for="email" class="sr-only">Direcci&oacute; de correo electr&oacute;nico</label>
-              <input type="email" id="email" class="form-control" placeholder="Correo electr&oacute;nico" required autofocus>
+              <input type="email" id="email" name="email" class="form-control" placeholder="Correo electr&oacute;nico" required autofocus>
               <label for="password" class="sr-only">Contrase&ntilde;a</label>
-              <input type="password" id="password" class="form-control" placeholder="Contrase&ntilde;a" required>
+              <input type="password" id="password" name="password" class="form-control" placeholder="Contrase&ntilde;a" required>
               <div class="checkbox mb-3">
                 <label>
                     <input type="checkbox" value="remember-me">&nbsp;Recordarme
