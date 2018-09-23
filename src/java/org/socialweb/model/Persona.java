@@ -36,7 +36,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(catalog = "socialweb",
         schema = "public",
         uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"cuit_cuil_cdi"})})
+            @UniqueConstraint(columnNames = {"cuit_cuil_cdi"})
+        })
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Persona.findAll",

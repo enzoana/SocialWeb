@@ -3,12 +3,10 @@ package org.socialweb.model;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
@@ -24,16 +22,16 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author enzo
  */
 @Entity
-@Table(name = "persona_juridica",
+@Table(name = "empresa_social",
         catalog = "socialweb",
         schema = "public")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "PersonaJuridica.findAll",
-            query = "SELECT p FROM PersonaJuridica p"),
-    @NamedQuery(name = "PersonaJuridica.findByPersona",
-            query = "SELECT p FROM PersonaJuridica p WHERE p.persona = :persona")})
-public class PersonaJuridica implements Serializable {
+    @NamedQuery(name = "EmpresaSocial.findAll",
+            query = "SELECT e FROM EmpresaSocial e"),
+    @NamedQuery(name = "EmpresaSocial.findByPersonaJuridica",
+            query = "SELECT e FROM EmpresaSocial e WHERE e.personaJuridica = :personaJuridica")})
+public class EmpresaSocial implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -41,40 +39,23 @@ public class PersonaJuridica implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(nullable = false)
-    private Integer persona;
+    private Integer personaJuridica;
 
-    @JoinColumn(name = "persona",
+    @JoinColumn(name = "persona_juridica",
             referencedColumnName = "codigo",
             nullable = false,
             insertable = false,
             updatable = false)
     @OneToOne(optional = false)
-    private Persona personaSuperClase;
+    private PersonaJuridica personaJuridicaSuperClase;
+
+    @Column(name = "matricula_inaes")
+    private Integer matriculaInaes;
 
     @Basic(optional = false)
     @NotNull
     @Size(min = 1,
             max = 2147483647)
-    @Column(name = "razon_social",
-            nullable = false,
-            length = 2147483647)
-    private String razonSocial;
-
-    @Size(max = 2147483647)
-    @Column(name = "nombre_comercial",
-            length = 2147483647)
-    private String nombreComercial;
-
-    @JoinColumn(name = "tipo_persona_juridica",
-            referencedColumnName = "codigo",
-            nullable = false)
-    @ManyToOne(cascade = CascadeType.ALL,
-            optional = false)
-    private TipoPersonaJuridica tipoPersonaJuridica;
-
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2147483647)
     @Column(name = "usr_create",
             nullable = false,
             length = 2147483647)
@@ -89,7 +70,8 @@ public class PersonaJuridica implements Serializable {
 
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 2147483647)
+    @Size(min = 1,
+            max = 2147483647)
     @Column(name = "usr_last_update",
             nullable = false,
             length = 2147483647)
@@ -102,68 +84,48 @@ public class PersonaJuridica implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date timeLastUpdate;
 
-    @OneToOne(cascade = CascadeType.ALL,
-            mappedBy = "personaJuridicaSuperClase")
-    private EmpresaSocial empresaSocial;
+    public EmpresaSocial() {}
 
-    public PersonaJuridica() {}
-
-    public PersonaJuridica(Integer persona) {
-        this.persona = persona;
+    public EmpresaSocial(Integer personaJuridica) {
+        this.personaJuridica = personaJuridica;
     }
 
-    public PersonaJuridica(Integer persona,
-            String razonSocial,
+    public EmpresaSocial(Integer personaJuridica,
+            Integer matriculaInaes,
             String usrCreate,
             Date timeCreate,
             String usrLastUpdate,
             Date timeLastUpdate) {
-        this.persona = persona;
-        this.razonSocial = razonSocial;
+        this.personaJuridica = personaJuridica;
+        this.matriculaInaes = matriculaInaes;
         this.usrCreate = usrCreate;
         this.timeCreate = timeCreate;
         this.usrLastUpdate = usrLastUpdate;
         this.timeLastUpdate = timeLastUpdate;
     }
 
-    public Integer getPersona() {
-        return persona;
+    public Integer getPersonaJuridica() {
+        return personaJuridica;
     }
 
-    public void setPersona(Integer persona) {
-        this.persona = persona;
+    public void setPersonaJuridica(Integer personaJuridica) {
+        this.personaJuridica = personaJuridica;
     }
 
-    public Persona getPersonaSuperClase() {
-        return personaSuperClase;
+    public PersonaJuridica getPersonaJuridicaSuperClase() {
+        return personaJuridicaSuperClase;
     }
 
-    public void setPersonaSuperClase(Persona personaSuperClase) {
-        this.personaSuperClase = personaSuperClase;
+    public void setPersonaJuridicaSuperClase(PersonaJuridica personaJuridicaSuperClase) {
+        this.personaJuridicaSuperClase = personaJuridicaSuperClase;
     }
 
-    public String getRazonSocial() {
-        return razonSocial;
+    public Integer getMatriculaInaes() {
+        return matriculaInaes;
     }
 
-    public void setRazonSocial(String razonSocial) {
-        this.razonSocial = razonSocial;
-    }
-
-    public String getNombreComercial() {
-        return nombreComercial;
-    }
-
-    public void setNombreComercial(String nombreComercial) {
-        this.nombreComercial = nombreComercial;
-    }
-
-    public TipoPersonaJuridica getTipoPersonaJuridica() {
-        return tipoPersonaJuridica;
-    }
-
-    public void setTipoPersonaJuridica(TipoPersonaJuridica tipoPersonaJuridica) {
-        this.tipoPersonaJuridica = tipoPersonaJuridica;
+    public void setMatriculaInaes(Integer matriculaInaes) {
+        this.matriculaInaes = matriculaInaes;
     }
 
     public String getUsrCreate() {
@@ -198,29 +160,21 @@ public class PersonaJuridica implements Serializable {
         this.timeLastUpdate = timeLastUpdate;
     }
 
-    public EmpresaSocial getEmpresaSocial() {
-        return empresaSocial;
-    }
-
-    public void setEmpresaSocial(EmpresaSocial empresaSocial) {
-        this.empresaSocial = empresaSocial;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (persona != null ? persona.hashCode() : 0);
+        hash += (personaJuridica != null ? personaJuridica.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof PersonaJuridica)) {
+        if (!(object instanceof EmpresaSocial)) {
             return false;
         }
-        PersonaJuridica other = (PersonaJuridica) object;
-        if ((this.persona == null && other.persona != null) || (this.persona != null && !this.persona.equals(other.persona))) {
+        EmpresaSocial other = (EmpresaSocial) object;
+        if ((this.personaJuridica == null && other.personaJuridica != null) || (this.personaJuridica != null && !this.personaJuridica.equals(other.personaJuridica))) {
             return false;
         }
         return true;
@@ -228,6 +182,6 @@ public class PersonaJuridica implements Serializable {
 
     @Override
     public String toString() {
-        return "org.socialweb.model.PersonaJuridica[ persona=" + persona + " ]";
+        return "org.socialweb.model.EmpresaSocial[ personaJuridica=" + personaJuridica + " ]";
     }
 }

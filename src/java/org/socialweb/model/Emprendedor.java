@@ -3,18 +3,17 @@ package org.socialweb.model;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -24,63 +23,63 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author enzo
  */
 @Entity
-@Table(name = "persona_humana",
+@Table(
         catalog = "socialweb",
-        schema = "public")
+        schema = "public",
+        uniqueConstraints = {
+            @UniqueConstraint(columnNames = {"usuario_login"}),
+            @UniqueConstraint(columnNames = {"correo_electronico_login"})
+        })
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "PersonaHumana.findAll",
-            query = "SELECT p FROM PersonaHumana p"),
-    @NamedQuery(name = "PersonaHumana.findByPersona",
-                query = "SELECT p FROM PersonaHumana p WHERE p.persona = :persona")})
-public class PersonaHumana implements Serializable {
+    @NamedQuery(name = "Emprendedor.findAll",
+            query = "SELECT e FROM Emprendedor e"),
+    @NamedQuery(name = "Emprendedor.findByPersonaHumana",
+            query = "SELECT e FROM Emprendedor e WHERE e.personaHumana = :personaHumana")})
+public class Emprendedor implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @Basic(optional = false)
     @NotNull
-    @Column(nullable = false)
-    private Integer persona;
+    @Column(name = "persona_humana", nullable = false)
+    private Integer personaHumana;
 
-    @JoinColumn(name = "persona",
+    @JoinColumn(name = "persona_humana",
             referencedColumnName = "codigo",
             nullable = false,
             insertable = false,
             updatable = false)
     @OneToOne(optional = false)
-    private Persona personaSuperClase;
-
-    @JoinColumn(name = "tipo_documento",
-            referencedColumnName = "codigo",
-            nullable = false)
-    @ManyToOne(cascade = CascadeType.ALL,
-            optional = false)
-    private TipoDocumento tipoDocumento;
+    private PersonaHumana personaHumanaSuperClase;
 
     @Basic(optional = false)
     @NotNull
     @Size(min = 1,
             max = 2147483647)
-    @Column(nullable = false,
+    @Column(name = "correo_electronico_login",
+            nullable = false,
             length = 2147483647)
-    private String documento;
+    private String correoElectronicoLogin;
 
     @Basic(optional = false)
     @NotNull
     @Size(min = 1,
             max = 2147483647)
-    @Column(nullable = false,
+    @Column(name = "usuario_login",
+            nullable = false,
             length = 2147483647)
-    private String nombre;
+    private String usuarioLogin;
 
     @Basic(optional = false)
     @NotNull
     @Size(min = 1,
             max = 2147483647)
-    @Column(nullable = false,
+    @Column(name = "password_login",
+            nullable = false,
             length = 2147483647)
-    private String apellido;
+    private String passwordLogin;
 
     @Basic(optional = false)
     @NotNull
@@ -114,80 +113,68 @@ public class PersonaHumana implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date timeLastUpdate;
 
-    @OneToOne(cascade = CascadeType.ALL,
-            mappedBy = "personaHumanaSuperClase")
-    private Emprendedor emprendedor;
+    public Emprendedor() {}
 
-    public PersonaHumana() {}
-
-    public PersonaHumana(Integer persona) {
-        this.persona = persona;
+    public Emprendedor(Integer personaHumana) {
+        this.personaHumana = personaHumana;
     }
 
-    public PersonaHumana(Integer persona,
-            String documento,
-            String nombre,
-            String apellido,
+    public Emprendedor(Integer personaHumana,
+            String correoElectronicoLogin,
+            String usuarioLogin,
+            String passwordLogin,
             String usrCreate,
             Date timeCreate,
             String usrLastUpdate,
             Date timeLastUpdate) {
-        this.persona = persona;
-        this.documento = documento;
-        this.nombre = nombre;
-        this.apellido = apellido;
+        this.personaHumana = personaHumana;
+        this.correoElectronicoLogin = correoElectronicoLogin;
+        this.usuarioLogin = usuarioLogin;
+        this.passwordLogin = passwordLogin;
         this.usrCreate = usrCreate;
         this.timeCreate = timeCreate;
         this.usrLastUpdate = usrLastUpdate;
         this.timeLastUpdate = timeLastUpdate;
     }
 
-    public Integer getPersona() {
-        return persona;
+    public Integer getPersonaHumana() {
+        return personaHumana;
     }
 
-    public void setPersona(Integer persona) {
-        this.persona = persona;
+    public void setPersonaHumana(Integer personaHumana) {
+        this.personaHumana = personaHumana;
     }
 
-    public Persona getPersonaSuperClase() {
-        return personaSuperClase;
+    public PersonaHumana getPersonaHumanaSuperClase() {
+        return personaHumanaSuperClase;
     }
 
-    public void setPersonaSuperClase(Persona personaSuperClase) {
-        this.personaSuperClase = personaSuperClase;
+    public void setPersonaHumanaSuperClase(PersonaHumana personaHumanaSuperClase) {
+        this.personaHumanaSuperClase = personaHumanaSuperClase;
     }
 
-    public TipoDocumento getTipoDocumento() {
-        return tipoDocumento;
+    public String getCorreoElectronicoLogin() {
+        return correoElectronicoLogin;
     }
 
-    public void setTipoDocumento(TipoDocumento tipoDocumento) {
-        this.tipoDocumento = tipoDocumento;
+    public void setCorreoElectronicoLogin(String correoElectronicoLogin) {
+        this.correoElectronicoLogin = correoElectronicoLogin;
     }
 
-    public String getDocumento() {
-        return documento;
+    public String getUsuarioLogin() {
+        return usuarioLogin;
     }
 
-    public void setDocumento(String documento) {
-        this.documento = documento;
+    public void setUsuarioLogin(String usuarioLogin) {
+        this.usuarioLogin = usuarioLogin;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getPasswordLogin() {
+        return passwordLogin;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
+    public void setPasswordLogin(String passwordLogin) {
+        this.passwordLogin = passwordLogin;
     }
 
     public String getUsrCreate() {
@@ -222,29 +209,21 @@ public class PersonaHumana implements Serializable {
         this.timeLastUpdate = timeLastUpdate;
     }
 
-    public Emprendedor getEmprendedor() {
-        return emprendedor;
-    }
-
-    public void setEmprendedor(Emprendedor emprendedor) {
-        this.emprendedor = emprendedor;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (persona != null ? persona.hashCode() : 0);
+        hash += (personaHumana != null ? personaHumana.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof PersonaHumana)) {
+        if (!(object instanceof Emprendedor)) {
             return false;
         }
-        PersonaHumana other = (PersonaHumana) object;
-        if ((this.persona == null && other.persona != null) || (this.persona != null && !this.persona.equals(other.persona))) {
+        Emprendedor other = (Emprendedor) object;
+        if ((this.personaHumana == null && other.personaHumana != null) || (this.personaHumana != null && !this.personaHumana.equals(other.personaHumana))) {
             return false;
         }
         return true;
@@ -252,6 +231,6 @@ public class PersonaHumana implements Serializable {
 
     @Override
     public String toString() {
-        return "org.socialweb.model.PersonaHumana[ persona=" + persona + " ]";
+        return "org.socialweb.model.Emprendedor[ personaHumana=" + personaHumana + " ]";
     }
 }
