@@ -71,7 +71,7 @@
           <div class="col-lg-4 text-center">
             <img src="${pageContext.request.contextPath}/img/logIn512.png" alt="X"/>
             <form class="form-signin" action="login.do" method="post">
-              <h1 class="h3 mb-3 font-weight-normal">Por favor autentif&iacute;quese:</h1>
+              <h1 class="h3 mb-3 font-weight-normal">Iniciar sesi&oacute;n</h1>
               <label for="email" class="sr-only">Direcci&oacute; de correo electr&oacute;nico</label>
               <input type="email" id="email" name="email" class="form-control" placeholder="Correo electr&oacute;nico" required autofocus>
               <label for="password" class="sr-only">Contrase&ntilde;a</label>
@@ -81,7 +81,7 @@
                     <input type="checkbox" value="remember-me">&nbsp;Recordarme
                 </label>
               </div>
-              <button class="btn btn-lg btn-primary btn-block" type="submit">Ingresar</button>
+              <button class="btn btn-lg btn-primary btn-block" type="submit"><img class="first-slide" src="${pageContext.request.contextPath}/img/signInWhite.png" alt="Ver detalle"></button>
             </form>
           </div>
           <div class="col-lg-4">

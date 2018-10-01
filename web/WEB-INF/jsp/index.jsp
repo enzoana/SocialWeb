@@ -65,7 +65,7 @@
               <div class="carousel-caption text-left">
                 <h1>T&iacute;tulo de art&iacute;culo</h1>
                 <p>Resumen del contenido del art&iacute;culo</p>
-                <p><a class="btn btn-lg btn-primary" href="#" role="button">Ver detalle de art&iacute;culo &raquo</a></p>
+                <p><a class="btn btn-lg btn-primary" href="#" role="button"><img class="first-slide" src="${pageContext.request.contextPath}/img/viewDetailsWhite.png" alt="Ver detalle"> &raquo</a></p>
               </div>
             </div>
           </div>
@@ -75,7 +75,7 @@
               <div class="carousel-caption">
                 <h1>T&iacute;tulo de art&iacute;culo</h1>
                 <p>Resumen del contenido del art&iacute;culo</p>
-                <p><a class="btn btn-lg btn-primary" href="#" role="button">Ver detalle de art&iacute;culo &raquo</a></p>
+                <p><a class="btn btn-lg btn-primary" href="#" role="button"><img class="first-slide" src="${pageContext.request.contextPath}/img/viewDetailsWhite.png" alt="Ver detalle"> &raquo</a></p>
               </div>
             </div>
           </div>
@@ -85,7 +85,7 @@
               <div class="carousel-caption text-right">
                 <h1>T&iacute;tulo de art&iacute;culo</h1>
                 <p>Resumen del contenido del art&iacute;culo</p>
-                <p><a class="btn btn-lg btn-primary" href="#" role="button">Ver detalle de art&iacute;culo &raquo</a></p>
+                <p><a class="btn btn-lg btn-primary" href="#" role="button"><img class="first-slide" src="${pageContext.request.contextPath}/img/viewDetailsWhite.png" alt="Ver detalle"> &raquo</a></p>
               </div>
             </div>
           </div>
@@ -113,19 +113,19 @@
             <img class="rounded-left rounded-right" src="https://drive.google.com/uc?id=13ZXkpMfx5rgR-C4RcP_yqVw-JSsQ8B8c" alt="X" width="140" height="140">
             <h2>T&iacute;tulo de art&iacute;culo</h2>
             <p>Resumen del contenido del art&iacute;culo. Aqu&iacute; se deber&iacute;a colocar un <b>resumen del art&iacute;culo</b> que no lleve mas de <b>trescientos caracteres</b>. Con el objetivo de hacer una introducci&oacute;n al mismo y lograr un buen estructurado del contenido del sitio Web.</p>
-            <p><a class="btn btn-secondary" href="#" role="button">Ver detalles &raquo;</a></p>
+            <p><a class="btn btn-secondary" href="#" role="button"><img class="first-slide" src="${pageContext.request.contextPath}/img/viewDetailsWhite.png" alt="Ver detalle"> &raquo;</a></p>
           </div>
           <div class="col-lg-4">
             <img class="rounded-circle" src="https://drive.google.com/uc?id=1GQyZSAvLd3n58GjG4f60urNyOMF4zRrH" alt="X" width="140" height="140">
             <h2>T&iacute;tulo de art&iacute;culo</h2>
             <p>Resumen del contenido del art&iacute;culo. Aqu&iacute; se deber&iacute;a colocar un <b>resumen del art&iacute;culo</b> que no lleve mas de <b>trescientos caracteres</b>. Con el objetivo de hacer una introducci&oacute;n al mismo y lograr un buen estructurado del contenido del sitio Web.</p>
-            <p><a class="btn btn-secondary" href="#" role="button">Ver detalles &raquo;</a></p>
+            <p><a class="btn btn-secondary" href="#" role="button"><img class="first-slide" src="${pageContext.request.contextPath}/img/viewDetailsWhite.png" alt="Ver detalle"> &raquo;</a></p>
           </div>
           <div class="col-lg-4">
             <img class="rounded-left rounded-right" src="https://drive.google.com/uc?id=1iRYHQ4vkdC5yIoEoh3ZPy8i7b5pf5gNX" alt="X" width="140" height="140">
             <h2>T&iacute;tulo de art&iacute;culo</h2>
             <p>Resumen del contenido del art&iacute;culo. Aqu&iacute; se deber&iacute;a colocar un <b>resumen del art&iacute;culo</b> que no lleve mas de <b>trescientos caracteres</b>. Con el objetivo de hacer una introducci&oacute;n al mismo y lograr un buen estructurado del contenido del sitio Web.</p>
-            <p><a class="btn btn-secondary" href="#" role="button">Ver detalles &raquo;</a></p>
+            <p><a class="btn btn-secondary" href="#" role="button"><img class="first-slide" src="${pageContext.request.contextPath}/img/viewDetailsWhite.png" alt="Ver detalle"> &raquo;</a></p>
           </div>
         </div>
 
