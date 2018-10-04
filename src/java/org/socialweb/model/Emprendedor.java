@@ -3,17 +3,18 @@ package org.socialweb.model;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -23,23 +24,14 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author enzo
  */
 @Entity
-@Table(
-        catalog = "socialweb",
-        schema = "public",
-        uniqueConstraints = {
-            @UniqueConstraint(columnNames = {"usuario_login"}),
-            @UniqueConstraint(columnNames = {"correo_electronico_login"})
-        })
+@Table(catalog = "socialweb",
+        schema = "public")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Emprendedor.findAll",
             query = "SELECT e FROM Emprendedor e"),
     @NamedQuery(name = "Emprendedor.findByPersonaHumana",
-            query = "SELECT e FROM Emprendedor e WHERE e.personaHumana = :personaHumana"),
-    @NamedQuery(name = "Emprendedor.findByCorreoElectronicoLogin",
-            query = "SELECT e FROM Emprendedor e WHERE e.correoElectronicoLogin = :correoElectronicoLogin"),
-    @NamedQuery(name = "Emprendedor.findByUsuarioLogin",
-            query = "SELECT e FROM Emprendedor e WHERE e.usuarioLogin = :usuarioLogin")})
+            query = "SELECT e FROM Emprendedor e WHERE e.personaHumana = :personaHumana")})
 public class Emprendedor implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -47,7 +39,7 @@ public class Emprendedor implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
-    @Column(name = "persona_humana", nullable = false)
+    @Column(nullable = false)
     private Integer personaHumana;
 
     @JoinColumn(name = "persona_humana",
@@ -58,32 +50,17 @@ public class Emprendedor implements Serializable {
     @OneToOne(optional = false)
     private PersonaHumana personaHumanaSuperClase;
 
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1,
-            max = 2147483647)
-    @Column(name = "correo_electronico_login",
-            nullable = false,
-            length = 2147483647)
-    private String correoElectronicoLogin;
+    @JoinColumn(name = "empresa_social",
+            referencedColumnName = "codigo",
+            nullable = false)
+    @ManyToOne(cascade = CascadeType.ALL,
+            optional = false)
+    private EmpresaSocial empresaSocial;
 
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1,
-            max = 2147483647)
-    @Column(name = "usuario_login",
-            nullable = false,
-            length = 2147483647)
-    private String usuarioLogin;
-
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1,
-            max = 2147483647)
-    @Column(name = "password_login",
-            nullable = false,
-            length = 2147483647)
-    private String passwordLogin;
+    @Column(nullable = false)
+    private int usuario;
 
     @Basic(optional = false)
     @NotNull
@@ -124,17 +101,11 @@ public class Emprendedor implements Serializable {
     }
 
     public Emprendedor(Integer personaHumana,
-            String correoElectronicoLogin,
-            String usuarioLogin,
-            String passwordLogin,
             String usrCreate,
             Date timeCreate,
             String usrLastUpdate,
             Date timeLastUpdate) {
         this.personaHumana = personaHumana;
-        this.correoElectronicoLogin = correoElectronicoLogin;
-        this.usuarioLogin = usuarioLogin;
-        this.passwordLogin = passwordLogin;
         this.usrCreate = usrCreate;
         this.timeCreate = timeCreate;
         this.usrLastUpdate = usrLastUpdate;
@@ -157,28 +128,20 @@ public class Emprendedor implements Serializable {
         this.personaHumanaSuperClase = personaHumanaSuperClase;
     }
 
-    public String getCorreoElectronicoLogin() {
-        return correoElectronicoLogin;
+    public EmpresaSocial getEmpresaSocial() {
+        return empresaSocial;
     }
 
-    public void setCorreoElectronicoLogin(String correoElectronicoLogin) {
-        this.correoElectronicoLogin = correoElectronicoLogin;
+    public void setEmpresaSocial(EmpresaSocial empresaSocial) {
+        this.empresaSocial = empresaSocial;
     }
 
-    public String getUsuarioLogin() {
-        return usuarioLogin;
+    public int getUsuario() {
+        return usuario;
     }
 
-    public void setUsuarioLogin(String usuarioLogin) {
-        this.usuarioLogin = usuarioLogin;
-    }
-
-    public String getPasswordLogin() {
-        return passwordLogin;
-    }
-
-    public void setPasswordLogin(String passwordLogin) {
-        this.passwordLogin = passwordLogin;
+    public void setUsuario(int usuario) {
+        this.usuario = usuario;
     }
 
     public String getUsrCreate() {
