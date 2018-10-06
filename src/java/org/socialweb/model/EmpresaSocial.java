@@ -60,7 +60,7 @@ public class EmpresaSocial implements Serializable {
 
     @OneToMany(fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
-            mappedBy = "empresa_social")
+            mappedBy = "empresaSocial")
     @JsonIgnore
     private Set<Emprendedor> emprendedores;
 

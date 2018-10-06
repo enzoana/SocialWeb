@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -102,9 +103,9 @@ public class Usuario implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date timeLastUpdate;
 
-    @OneToMany(cascade = CascadeType.ALL,
-            mappedBy = "usuario")
-    private Set<UsuarioRol> usuarioRolSet;
+    @ManyToMany(cascade = CascadeType.ALL,
+            mappedBy = "usuarios")
+    private Set<Rol> roles;
 
     public Usuario() {}
 
@@ -195,12 +196,12 @@ public class Usuario implements Serializable {
     }
 
     @XmlTransient
-    public Set<UsuarioRol> getUsuarioRolSet() {
-        return usuarioRolSet;
+    public Set<Rol> getRoles() {
+        return roles;
     }
 
-    public void setUsuarioRolSet(Set<UsuarioRol> usuarioRolSet) {
-        this.usuarioRolSet = usuarioRolSet;
+    public void setRoles(Set<Rol> roles) {
+        this.roles = roles;
     }
 
     @Override
@@ -227,5 +228,4 @@ public class Usuario implements Serializable {
     public String toString() {
         return "org.socialweb.model.Usuario[ codigo=" + codigo + " ]";
     }
-    
 }
