@@ -47,12 +47,12 @@ public class EmpresaSocial implements Serializable {
     @Column(nullable = false)
     private Integer personaJuridica;
 
+    @OneToOne(optional = false)
     @JoinColumn(name = "persona_juridica",
-            referencedColumnName = "codigo",
+            referencedColumnName = "persona",
             nullable = false,
             insertable = false,
             updatable = false)
-    @OneToOne(optional = false)
     private PersonaJuridica personaJuridicaSuperClase;
 
     @Column(name = "matricula_inaes")

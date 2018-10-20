@@ -54,6 +54,8 @@ Contributor(s):
     <mapping class="org.socialweb.model.Ciudad"/>
     <mapping class="org.socialweb.model.Contacto"/>
     <mapping class="org.socialweb.model.Domicilio"/>
+    <mapping class="org.socialweb.model.Emprendedor"/>
+    <mapping class="org.socialweb.model.EmpresaSocial"/>
     <mapping class="org.socialweb.model.EstadoCiudad"/>
     <mapping class="org.socialweb.model.EstadoPais"/>
     <mapping class="org.socialweb.model.EstadoPersona"/>
