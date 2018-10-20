@@ -72,8 +72,8 @@
             <img src="${pageContext.request.contextPath}/img/logIn512.png" alt="X"/>
             <form class="form-signin" action="login.do" method="post">
               <h1 class="h3 mb-3 font-weight-normal">Iniciar sesi&oacute;n</h1>
-              <label for="email" class="sr-only">Direcci&oacute; de correo electr&oacute;nico</label>
-              <input type="email" id="email" name="email" class="form-control" placeholder="Correo electr&oacute;nico" required autofocus>
+              <label for="usuario_email" class="sr-only">Usuario o correo electr&oacute;nico</label>
+              <input type="text" id="usuario_email" name="usuario_email" class="form-control" placeholder="Usuario o correo electr&oacute;nico" required autofocus>
               <label for="password" class="sr-only">Contrase&ntilde;a</label>
               <input type="password" id="password" name="password" class="form-control" placeholder="Contrase&ntilde;a" required>
               <div class="checkbox mb-3">

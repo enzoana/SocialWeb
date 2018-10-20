@@ -9,7 +9,7 @@
         <param-value>/WEB-INF/applicationContext.xml</param-value>
     </context-param>
     <context-param>
-        <param-name>contextConfigLocation</param-name>
+        <param-name>contextSpringSecurityLocation</param-name>
         <param-value>/WEB-INF/spring-security.xml</param-value>
     </context-param>
     <context-param>

@@ -60,7 +60,7 @@
         </ol>
         <div class="carousel-inner">
           <div class="carousel-item active">
-            <img class="first-slide" src="https://drive.google.com/uc?id=1L8kKfiVdNUk2dBMEik0L0gt1BvYfsNya" alt="X">
+            <img class="first-slide" src="https://drive.google.com/uc?id=1Y5LtLA57GS4tEPEDrBrmcobuWpxj75ob" alt="X">
             <div class="container">
               <div class="carousel-caption text-left">
                 <h1>T&iacute;tulo de art&iacute;culo</h1>
