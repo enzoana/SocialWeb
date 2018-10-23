@@ -43,7 +43,7 @@ public class Emprendedor implements Serializable {
     private Integer personaHumana;
 
     @JoinColumn(name = "persona_humana",
-            referencedColumnName = "codigo",
+            referencedColumnName = "persona",
             nullable = false,
             insertable = false,
             updatable = false)
@@ -51,7 +51,7 @@ public class Emprendedor implements Serializable {
     private PersonaHumana personaHumanaSuperClase;
 
     @JoinColumn(name = "empresa_social",
-            referencedColumnName = "codigo",
+            referencedColumnName = "personaJuridica",
             nullable = false)
     @ManyToOne(cascade = CascadeType.ALL,
             optional = false)

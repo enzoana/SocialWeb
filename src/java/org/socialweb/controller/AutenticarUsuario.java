@@ -4,8 +4,6 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
 import org.socialweb.model.Usuario;
 import org.socialweb.utils.NewHibernateUtil;
 import org.springframework.stereotype.Controller;
@@ -52,7 +50,7 @@ System.out.println("Autenticando usuario: " + usuarioEmail + " - password: " + p
                     usuario = (Usuario) query.list().get(0);
                 }
             } else {
-                Query query = (Query) session.getNamedQuery("Usuario.findByCorreoElectronicoLogin");
+                Query query = (Query) session.getNamedQuery("Usuario.findByCorreoElectronicoLoginCheckLogin");
                 query.setParameter("usuarioLogin", usuarioEmail);
                 query.setParameter("passwordLogin", password);
                 if ((query.list() != null) && (query.list().isEmpty())) {
