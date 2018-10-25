@@ -30,8 +30,6 @@ public class AutenticarUsuario {
             @RequestParam("usuario_email") String usuarioEmail,
             @RequestParam("password") String password) {
 
-System.out.println("Autenticando usuario: " + usuarioEmail + " - password: " + password);
-
         SessionFactory sessionFactory = NewHibernateUtil.getSessionFactory();
         Session session = null;
         Usuario usuario = null;
@@ -40,20 +38,20 @@ System.out.println("Autenticando usuario: " + usuarioEmail + " - password: " + p
 
             session = sessionFactory.openSession();
 
-            Boolean loginConEmail = usuarioEmail.contains("@");
-System.out.println("LogIn con correo electronico: " + loginConEmail);
+            boolean loginConEmail = usuarioEmail.contains("@");
+
             if (! loginConEmail) {
                 Query query = (Query) session.getNamedQuery("Usuario.findByUsuarioLoginCheckLogin");
                 query.setParameter("usuarioLogin", usuarioEmail);
                 query.setParameter("passwordLogin", password);
-                if ((query.list() != null) && (query.list().isEmpty())) {
+                if ((query.list() != null) && (! query.list().isEmpty())) {
                     usuario = (Usuario) query.list().get(0);
                 }
             } else {
                 Query query = (Query) session.getNamedQuery("Usuario.findByCorreoElectronicoLoginCheckLogin");
-                query.setParameter("usuarioLogin", usuarioEmail);
+                query.setParameter("correoElectronicoLogin", usuarioEmail);
                 query.setParameter("passwordLogin", password);
-                if ((query.list() != null) && (query.list().isEmpty())) {
+                if ((query.list() != null) && (! query.list().isEmpty())) {
                     usuario = (Usuario) query.list().get(0);
                 }
             }
@@ -66,10 +64,8 @@ System.out.println("LogIn con correo electronico: " + loginConEmail);
         }
 
         if (usuario != null) {
-System.out.println("PASO TODO OK - " + usuario.toString());
             return true;
         } else {
-System.out.println("PASO TODO OK - usuario no encontrado");
             return false;
         }
     }

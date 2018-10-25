@@ -39,7 +39,7 @@ import javax.xml.bind.annotation.XmlTransient;
             query = "SELECT u FROM Usuario u WHERE u.codigo = :codigo"),
     @NamedQuery(name = "Usuario.findByUsuarioLogin",
             query = "SELECT u FROM Usuario u WHERE u.usuarioLogin = :usuarioLogin"),
-        @NamedQuery(name = "Usuario.findByUsuarioLoginCheckLogin",
+    @NamedQuery(name = "Usuario.findByUsuarioLoginCheckLogin",
             query = "SELECT u FROM Usuario u WHERE u.usuarioLogin = :usuarioLogin AND u.passwordLogin = :passwordLogin"),
     @NamedQuery(name = "Usuario.findByCorreoElectronicoLogin",
             query = "SELECT u FROM Usuario u WHERE u.correoElectronicoLogin = :correoElectronicoLogin"),
