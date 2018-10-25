@@ -38,13 +38,13 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuario.findByCodigo",
             query = "SELECT u FROM Usuario u WHERE u.codigo = :codigo"),
     @NamedQuery(name = "Usuario.findByUsuarioLogin",
-            query = "SELECT u FROM Usuario u WHERE u.usuario_login = :usuarioLogin"),
+            query = "SELECT u FROM Usuario u WHERE u.usuarioLogin = :usuarioLogin"),
         @NamedQuery(name = "Usuario.findByUsuarioLoginCheckLogin",
-            query = "SELECT u FROM Usuario u WHERE u.usuario_login = :usuarioLogin AND u.password_login = :passwordLogin"),
+            query = "SELECT u FROM Usuario u WHERE u.usuarioLogin = :usuarioLogin AND u.passwordLogin = :passwordLogin"),
     @NamedQuery(name = "Usuario.findByCorreoElectronicoLogin",
-            query = "SELECT u FROM Usuario u WHERE u.correo_electronico_login = :correoElectronicoLogin"),
+            query = "SELECT u FROM Usuario u WHERE u.correoElectronicoLogin = :correoElectronicoLogin"),
     @NamedQuery(name = "Usuario.findByCorreoElectronicoLoginCheckLogin",
-            query = "SELECT u FROM Usuario u WHERE u.correo_electronico_login = :correoElectronicoLogin AND u.password_login = :passwordLogin")})
+            query = "SELECT u FROM Usuario u WHERE u.correoElectronicoLogin = :correoElectronicoLogin AND u.passwordLogin = :passwordLogin")})
 public class Usuario implements Serializable {
 
     private static final long serialVersionUID = 1L;

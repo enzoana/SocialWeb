@@ -66,8 +66,10 @@ Contributor(s):
     <mapping class="org.socialweb.model.PersonaHumana"/>
     <mapping class="org.socialweb.model.PersonaJuridica"/>
     <mapping class="org.socialweb.model.Provincia"/>
+    <mapping class="org.socialweb.model.Rol"/>
     <mapping class="org.socialweb.model.TipoContacto"/>
     <mapping class="org.socialweb.model.TipoDocumento"/>
     <mapping class="org.socialweb.model.TipoPersonaJuridica"/>
+    <mapping class="org.socialweb.model.Usuario"/>
   </session-factory>
 </hibernate-configuration>

@@ -41,7 +41,7 @@ System.out.println("Autenticando usuario: " + usuarioEmail + " - password: " + p
             session = sessionFactory.openSession();
 
             Boolean loginConEmail = usuarioEmail.contains("@");
-
+System.out.println("LogIn con correo electronico: " + loginConEmail);
             if (! loginConEmail) {
                 Query query = (Query) session.getNamedQuery("Usuario.findByUsuarioLoginCheckLogin");
                 query.setParameter("usuarioLogin", usuarioEmail);
