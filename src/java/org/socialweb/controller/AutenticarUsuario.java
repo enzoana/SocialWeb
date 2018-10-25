@@ -26,7 +26,7 @@ public class AutenticarUsuario {
 
     @RequestMapping(value = "/login.do",
             method = RequestMethod.POST)
-    public boolean autenticarUsuario(
+    public String autenticarUsuario(
             @RequestParam("usuario_email") String usuarioEmail,
             @RequestParam("password") String password) {
 
@@ -64,9 +64,9 @@ public class AutenticarUsuario {
         }
 
         if (usuario != null) {
-            return true;
+            return "";
         } else {
-            return false;
+            return "logIn";
         }
     }
 }

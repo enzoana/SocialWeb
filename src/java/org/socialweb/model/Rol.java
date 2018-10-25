@@ -34,6 +34,10 @@ import javax.xml.bind.annotation.XmlTransient;
             query = "SELECT r FROM Rol r WHERE r.codigo = :codigo")})
 public class Rol implements Serializable {
 
+    public static final int ADMINISTRADOR_GENERAL = 1;
+    public static final int ADMINISTRADOR_EMPRESA_SOCIAL = 2;
+    public static final int EMPRENDEDOR = 3;
+
     private static final long serialVersionUID = 1L;
 
     @Id

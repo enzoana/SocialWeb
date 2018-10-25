@@ -1,5 +1,11 @@
 package org.socialweb.security;
 
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.socialweb.model.Usuario;
+import org.socialweb.utils.NewHibernateUtil;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,32 +20,54 @@ public class SocialWebUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        /*Here we are using dummy data, you need to load user data from
-        database or other third party application*/
-/*
-        Emprendedor user = findUserbyUsername(username);
+        Usuario usuario = findUserByUsername(username);
 
         UserBuilder builder = null;
-        if (user != null) {
+        if (usuario != null) {
             builder = org.springframework.security.core.userdetails.User.withUsername(username);
-            builder.password(new BCryptPasswordEncoder().encode(user.getPassword()));
-            builder.roles(user.getRoles());
+            builder.password(new BCryptPasswordEncoder().encode(usuario.getPasswordLogin()));
+            builder.roles(usuario.getRoles());
         } else {
-            throw new UsernameNotFoundException("User not found.");
+            throw new UsernameNotFoundException("Usuario no encontrado.");
         }
 
         return builder.build();
-*/
-return null;
-    }
-/*
-    private Emprendedor findUserbyUsername(String username) {
 
-        if(username.equalsIgnoreCase("admin")) {
-            return new Emprendedor();
+    }
+
+    private Usuario findUserByUsername(String username) {
+
+        SessionFactory sessionFactory = NewHibernateUtil.getSessionFactory();
+        Session session = null;
+        Usuario usuario = null;
+
+        try {
+
+            session = sessionFactory.openSession();
+
+            boolean loginConEmail = username.contains("@");
+
+            if (! loginConEmail) {
+                Query query = (Query) session.getNamedQuery("Usuario.findByUsuarioLogin");
+                query.setParameter("usuarioLogin", username);
+                if ((query.list() != null) && (! query.list().isEmpty())) {
+                    usuario = (Usuario) query.list().get(0);
+                }
+            } else {
+                Query query = (Query) session.getNamedQuery("Usuario.findByCorreoElectronicoLogin");
+                query.setParameter("correoElectronicoLogin", username);
+                if ((query.list() != null) && (! query.list().isEmpty())) {
+                    usuario = (Usuario) query.list().get(0);
+                }
+            }
+
+            session.close();
+
+        } catch(HibernateException ex) {
+            System.out.println("org.socialweb.controller.AutenticarUsuario.autenticarUsuario()");
+            System.out.println(ex.getMessage());
         }
 
-        return null;
+       return usuario;
     }
-*/
 }
